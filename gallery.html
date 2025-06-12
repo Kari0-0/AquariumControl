@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розумний Акваріум - Галерея</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            justify-items: center;
+        }
+        .gallery-item {
+            background-color: #f0f4f8;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+        }
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid #c5e1fe;
+        }
+        .gallery-item-title {
+            padding: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.2em;
+            color: #0d47a1;
+        }
+        @media (max-width: 768px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            .gallery-item {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <img src="aquarium-banner.jpg" alt="Красивий акваріум" class="header-image">
+            <div class="header-content">
+                <h1>Галерея Акваріумів</h1>
+                <p class="tagline">Натхнення для вашого водного світу.</p>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Головна</a></li>
+                <li><a href="about.html">Про Систему</a></li>
+                <li><a href="faq.html">Часті питання</a></li>
+                <li><a href="contacts.html">Контакти</a></li>
+                <li><a href="specs.html">Характеристики</a></li>
+                <li><a href="how-it-works.html">Принципи Роботи</a></li>
+                <li><a href="history.html">Історія Змін</a></li>
+                <li><a href="gallery.html" class="active">Галерея</a></li>
+                <li><a href="settings.html">Налаштування</a></li>
+                <li><a href="privacy.html">Політика</a></li>
+            </ul>
+        </nav>
+
+        <main class="content-page">
+            <h2>Приклади Акваріумів</h2>
+            <p>
+                Ця галерея містить приклади красиво оформлених акваріумів, які можуть служити натхненням для створення вашого ідеального водного світу. Пам'ятайте, що правильний моніторинг та догляд є ключовими для їхнього процвітання.
+            </p>
+
+            <div class="image-gallery">
+                <div class="gallery-item">
+                    <img src="aquarium1.jpg" alt="Сучасний акваріум">
+                    <div class="gallery-item-title">Сучасний акваріум</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquarium2.jpg" alt="Тропічний акваріум">
+                    <div class="gallery-item-title">Тропічний акваріум</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquarium3.jpg" alt="Акваскейп">
+                    <div class="gallery-item-title">Природний акваскейп</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquarium4.jpg" alt="Великий акваріум">
+                    <div class="gallery-item-title">Великий домашній акваріум</div>
+                </div>
+                </div>
+            <p style="text-align: center; margin-top: 30px; font-style: italic; color: #777;">
+                Зображення використані з ресурсів безкоштовних стокових фото.
+            </p>
+        </main>
+    </div>
+</body>
+</html>

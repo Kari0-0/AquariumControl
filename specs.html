@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розумний Акваріум - Характеристики</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <img src="aquarium-banner.jpg" alt="Красивий акваріум" class="header-image">
+            <div class="header-content">
+                <h1>Технічні Характеристики Системи</h1>
+                <p class="tagline">Деталі архітектури та можливостей.</p>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Головна</a></li>
+                <li><a href="about.html">Про Систему</a></li>
+                <li><a href="faq.html">Часті питання</a></li>
+                <li><a href="contacts.html">Контакти</a></li>
+                <li><a href="specs.html" class="active">Характеристики</a></li>
+                <li><a href="how-it-works.html">Принципи Роботи</a></li>
+                <li><a href="history.html">Історія Змін</a></li>
+                <li><a href="gallery.html">Галерея</a></li>
+                <li><a href="settings.html">Налаштування</a></li>
+                <li><a href="privacy.html">Політика</a></li>
+            </ul>
+        </nav>
+
+        <main class="content-page">
+            <h2>Імітовані Можливості та Технології</h2>
+            <p>
+                Ця інтелектуальна система імітує ключові аспекти моніторингу та догляду за акваріумом, використовуючи сучасні веб-технології для створення інтерактивного користувацького досвіду.
+            </p>
+
+            <h3>Імітовані Сенсори та Параметри:</h3>
+            <ul>
+                <li><strong>Температура Води:</strong> Діапазон імітації: 24.0°C - 27.0°C. Оновлюється автоматично з часом.</li>
+                <li><strong>Рівень pH:</strong> Діапазон імітації: 6.5 - 7.5. Також автоматично змінюється.</li>
+                <li><strong>Статус Годування:</strong> Віртуальна активація механізму годування. Впливає на температуру.</li>
+                <li><strong>Статус Освітлення:</strong> Керування увімкненням/вимкненням віртуального освітлення.</li>
+            </ul>
+
+            <h3>Використані Технології:</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Структура веб-сторінки та семантична розмітка.</li>
+                <li><strong>CSS3:</strong> Візуальне оформлення, анімації, адаптивний дизайн та ефекти (градієнти, тіні, затемнення).</li>
+                <li><strong>JavaScript (ES6+):</strong> Динамічна взаємодія з користувачем, керування даними, асинхронні запити.</li>
+                <li><strong>MockAPI.io:</strong> Імітація віддаленого API для зберігання та отримання даних про стан акваріума. Використовується як тимчасова "база даних".</li>
+                <li><strong>Google Fonts:</strong> Сучасні шрифти (Montserrat, Open Sans) для покращеної типографіки.</li>
+            </ul>
+
+            <h3>Архітектура Системи (Віртуальна):</h3>
+            <p>
+                Система побудована за принципом клієнт-серверної взаємодії. Веб-інтерфейс (клієнтська частина) відправляє запити на віддалений сервер (MockAPI.io) та отримує звідти дані, відображаючи їх користувачеві. Усі "логічні" операції (симуляція змін, запис подій) виконуються на клієнтській стороні та відображаються у лозі.
+            </p>
+            <p>
+                Ця архітектура дозволяє легко масштабувати систему, додаючи нові сенсори, функції та можливості взаємодії.
+            </p>
+        </main>
+    </div>
+</body>
+</html>
