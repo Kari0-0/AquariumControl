@@ -15,15 +15,45 @@
     }
 
     body {
+      display: flex;
+      min-height: 100vh;
       background-color: #f4f9fb;
-      padding: 20px;
       color: #333;
     }
 
-    h1 {
-      text-align: center;
+    aside {
+      width: 220px;
+      background-color: #2a95b8;
+      color: white;
+      padding: 20px;
+    }
+
+    aside h2 {
       margin-bottom: 30px;
-      color: #2a95b8;
+      font-size: 20px;
+    }
+
+    aside nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    aside nav a:hover {
+      background-color: #217a99;
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 30px;
+    }
+
+    header {
+      margin-bottom: 30px;
     }
 
     .dashboard {
@@ -54,32 +84,64 @@
     canvas {
       max-width: 100%;
     }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <h1>Особистий кабінет</h1>
+  <aside>
+    <h2>Акваріум</h2>
+    <nav>
+      <a href="#">Головна</a>
+      <a href="#">Мої акваріуми</a>
+      <a href="#">Статистика</a>
+      <a href="#">Налаштування</a>
+      <a href="#">Вийти</a>
+    </nav>
+  </aside>
 
-  <div class="dashboard">
-    <div class="card">
-      <h2>Кількість акваріумів</h2>
-      <p id="aquariumCount">Завантаження...</p>
+  <main>
+    <header>
+      <h1>Вітаємо, Користувачу!</h1>
+      <p>Огляд вашої системи розумного акваріума</p>
+    </header>
+
+    <div class="dashboard">
+      <div class="card">
+        <h2>Кількість акваріумів</h2>
+        <p id="aquariumCount">Завантаження...</p>
+      </div>
+
+      <div class="card">
+        <h2>Середні показники</h2>
+        <p>Температура: <strong>24.3°C</strong></p>
+        <p>pH: <strong>7.2</strong></p>
+      </div>
+
+      <div class="card">
+        <h2>Журнал подій</h2>
+        <ul class="log-list" id="logList">
+          <li>Завантаження логів...</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Статистика температури</h2>
+        <canvas id="tempChart"></canvas>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>Журнал подій</h2>
-      <ul class="log-list" id="logList">
-        <li>Завантаження логів...</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>Статистика температури</h2>
-      <canvas id="tempChart"></canvas>
-    </div>
-  </div>
+    <footer>
+      Розробила команда AquariumControl, 2025 ©
+    </footer>
+  </main>
 
   <script>
-    // Симульовані дані
     const aquariumCount = 3;
     const logs = [
       "10:00 — Увімкнено освітлення",
@@ -100,7 +162,6 @@
       }]
     };
 
-    // Відображення даних
     document.getElementById('aquariumCount').textContent = aquariumCount;
     const logList = document.getElementById('logList');
     logList.innerHTML = '';
@@ -110,7 +171,6 @@
       logList.appendChild(li);
     });
 
-    // Побудова графіку
     new Chart(document.getElementById('tempChart'), {
       type: 'line',
       data: tempData,
