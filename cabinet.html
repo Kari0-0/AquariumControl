@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Особистий кабінет — Розумний Акваріум</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-color: #f4f9fb;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2a95b8;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #217a99;
+    }
+
+    .log-list {
+      max-height: 200px;
+      overflow-y: auto;
+      padding-left: 20px;
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Особистий кабінет</h1>
+
+  <div class="dashboard">
+    <div class="card">
+      <h2>Кількість акваріумів</h2>
+      <p id="aquariumCount">Завантаження...</p>
+    </div>
+
+    <div class="card">
+      <h2>Журнал подій</h2>
+      <ul class="log-list" id="logList">
+        <li>Завантаження логів...</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Статистика температури</h2>
+      <canvas id="tempChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // Симульовані дані
+    const aquariumCount = 3;
+    const logs = [
+      "10:00 — Увімкнено освітлення",
+      "10:30 — Погодувано риб",
+      "11:00 — Температура знижена до 24°C",
+      "12:00 — Збережено зміни pH"
+    ];
+
+    const tempData = {
+      labels: ['8:00', '10:00', '12:00', '14:00', '16:00'],
+      datasets: [{
+        label: 'Температура (°C)',
+        data: [23.5, 24, 24.3, 24.8, 25.0],
+        borderColor: '#2a95b8',
+        backgroundColor: 'rgba(42, 149, 184, 0.2)',
+        fill: true,
+        tension: 0.3
+      }]
+    };
+
+    // Відображення даних
+    document.getElementById('aquariumCount').textContent = aquariumCount;
+    const logList = document.getElementById('logList');
+    logList.innerHTML = '';
+    logs.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      logList.appendChild(li);
+    });
+
+    // Побудова графіку
+    new Chart(document.getElementById('tempChart'), {
+      type: 'line',
+      data: tempData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Температура, °C'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
