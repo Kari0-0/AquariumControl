@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Реєстрація — Розумний Акваріум</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e2f3f5, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-box {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .register-box h2 {
+      margin-bottom: 20px;
+      color: #2a95b8;
+      text-align: center;
+    }
+
+    .register-box label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .register-box input[type="text"],
+    .register-box input[type="email"],
+    .register-box input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s;
+    }
+
+    .register-box input:focus {
+      border-color: #2a95b8;
+      outline: none;
+    }
+
+    .register-box button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #2a95b8;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .register-box button:hover {
+      background-color: #217a99;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.success {
+      color: green;
+    }
+
+    .message.error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-box">
+    <h2>Реєстрація нового користувача</h2>
+    <form id="registerForm">
+      <label for="username">Логін</label>
+      <input type="text" id="username" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="password">Пароль</label>
+      <input type="password" id="password" required />
+
+      <label for="confirmPassword">Підтвердіть пароль</label>
+      <input type="password" id="confirmPassword" required />
+
+      <button type="submit">Зареєструватися</button>
+      <div class="message success" id="success">Реєстрація успішна! Перенаправлення...</div>
+      <div class="message error" id="error">Помилка: перевірте введені дані.</div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const success = document.getElementById("success");
+      const error = document.getElementById("error");
+
+      // Проста перевірка полів
+      if (!username || !email || !password || password !== confirmPassword) {
+        success.style.display = "none";
+        error.style.display = "block";
+        return;
+      }
+
+      // Симуляція успішної реєстрації
+      error.style.display = "none";
+      success.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "login.html"; // Перенаправлення на сторінку входу
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
