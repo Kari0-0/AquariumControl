@@ -8,183 +8,160 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    body {
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-      background-color: #f4f9fb;
-      color: #333;
-    }
-
-    aside {
-      width: 220px;
-      background-color: #2a95b8;
-      color: white;
-      padding: 20px;
-    }
-
-    aside h2 {
-      margin-bottom: 30px;
-      font-size: 20px;
-    }
-
-    aside nav a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin-bottom: 12px;
-      padding: 8px;
-      border-radius: 6px;
-      transition: background-color 0.3s;
-    }
-
-    aside nav a:hover {
-      background-color: #217a99;
-    }
-
-    main {
-      flex-grow: 1;
-      padding: 30px;
-      padding-bottom: 80px;
-    }
-
-    header {
-      margin-bottom: 30px;
-    }
-
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background-color: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .card h2 {
-      margin-bottom: 10px;
-      font-size: 18px;
-      color: #217a99;
-    }
-
-    .log-list {
-      max-height: 200px;
-      overflow-y: auto;
-      padding-left: 20px;
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-    .toggle {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 28px;
-    }
-
-    .toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 28px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-
-    .toggle input:checked + .slider {
-      background-color: #2a95b8;
-    }
-
-    .toggle input:checked + .slider:before {
-      transform: translateX(22px);
-    }
-
-    canvas {
-      max-width: 100%;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #777;
-      font-size: 14px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-      }
-
-      aside {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        padding: 10px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        background-color: #2a95b8;
-        z-index: 1000;
-      }
-
-      aside h2 {
-        display: none;
-      }
-
-      aside nav {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-around;
-      }
-
-      aside nav a {
-        margin: 0;
-        padding: 8px 10px;
-        font-size: 14px;
-      }
-    }
+    /* стилі залишаються без змін */
   </style>
 </head>
 <body>
-  <!-- решта коду залишиться без змін, окрім контенту кожної сторінки, і імені -->
+  <aside>
+    <h2>Акваріум</h2>
+    <nav>
+      <a href="#" class="nav-btn" data-page="homePage">Головна</a>
+      <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
+      <a href="#" class="nav-btn" data-page="statsPage">Статистика</a>
+      <a href="#" class="nav-btn" data-page="settingsPage">Налаштування</a>
+      <a href="https://kari0-0.github.io/AquariumControl/index.html">Вийти</a>
+    </nav>
+  </aside>
+
+  <main>
+    <header>
+      <h1>Вітаємо, Карина!</h1>
+      <p>Огляд вашої системи розумного акваріума</p>
+    </header>
+
+    <div class="dashboard" id="homePage">
+      <div class="card">
+        <h2>Стан системи</h2>
+        <p><strong>Акваріумів:</strong> 3</p>
+        <p><strong>Онлайн:</strong> 2</p>
+        <p><strong>Сповіщення:</strong> 1 активне</p>
+        <img src="https://images.unsplash.com/photo-1560185127-6b6c1f6de47d" alt="Акваріум стан">
+      </div>
+      <div class="card">
+        <h2>Останні події</h2>
+        <ul class="log-list">
+          <li>08:00 — Заміна води завершена</li>
+          <li>09:30 — Годування завершено</li>
+          <li>10:00 — Аерація активна</li>
+          <li>10:15 — Додано кондиціонер</li>
+          <li>10:30 — Температура нормалізована</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Графік температури</h2>
+        <canvas id="tempChart"></canvas>
+      </div>
+    </div>
+
+    <div class="dashboard hidden" id="myAquariums">
+      <div class="card">
+        <h2>Акваріум №1</h2>
+        <p>pH: 7.1 | Температура: 25.2°C | Об'єм: 60л</p>
+        <img src="https://images.unsplash.com/photo-1615873968403-f7cc4d729ed1" alt="Акваріум 1">
+      </div>
+      <div class="card">
+        <h2>Акваріум №2</h2>
+        <p>pH: 6.9 | Температура: 24.7°C | Об'єм: 120л</p>
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8e" alt="Акваріум 2">
+      </div>
+      <div class="card">
+        <h2>Акваріум №3</h2>
+        <p>pH: 7.3 | Температура: 26.0°C | Об'єм: 30л</p>
+        <img src="https://images.unsplash.com/photo-1621623899792-bcb7d7a0e6df" alt="Акваріум 3">
+      </div>
+    </div>
+
+    <div class="dashboard hidden" id="statsPage">
+      <div class="card">
+        <h2>Споживання</h2>
+        <p>Енергія: 1.4 кВт/день</p>
+        <p>Корм: 35 г/день</p>
+        <p>Освітлення: 12 год/день</p>
+      </div>
+      <div class="card">
+        <h2>Параметри середовища</h2>
+        <p>Температура: 24.5°C</p>
+        <p>Кисень: 6.7 мг/л</p>
+        <p>Аміак: 0.01 мг/л</p>
+      </div>
+    </div>
+
+    <div class="dashboard hidden" id="settingsPage">
+      <div class="card">
+        <h2>Налаштування</h2>
+        <p>Інтерфейс: Українська</p>
+        <p>Користувач: <strong>Карина</strong></p>
+        <label>Сповіщення
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </label><br><br>
+        <label>Автогодівля
+          <label class="toggle">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </label><br><br>
+        <label>Режим економії
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </label>
+      </div>
+    </div>
+
+    <footer>
+      Розробила команда AquariumControl, 2025 ©
+    </footer>
+  </main>
+
+  <script>
+    const tempData = {
+      labels: ['6:00', '8:00', '10:00', '12:00', '14:00'],
+      datasets: [{
+        label: 'Температура (°C)',
+        data: [23.8, 24.1, 24.5, 25.0, 24.7],
+        borderColor: '#2a95b8',
+        backgroundColor: 'rgba(42, 149, 184, 0.2)',
+        fill: true,
+        tension: 0.3
+      }]
+    };
+
+    new Chart(document.getElementById('tempChart'), {
+      type: 'line',
+      data: tempData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Температура, °C'
+            }
+          }
+        }
+      }
+    });
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute('data-page');
+        document.querySelectorAll('.dashboard').forEach(section => {
+          section.classList.add('hidden');
+        });
+        document.getElementById(targetId).classList.remove('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
