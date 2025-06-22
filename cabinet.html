@@ -178,3 +178,243 @@
   </style>
 </head>
 <body>
+   <aside>
+    <h2>Акваріум</h2>
+    <nav>
+      <a href="#" class="nav-btn" data-page="homePage">Головна</a>
+      <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
+      <a href="#" class="nav-btn" data-page="statsPage">Статистика</a>
+      <a href="#" class="nav-btn" data-page="analyticsPage">Google Аналітика</a>
+      <a href="#" class="nav-btn" data-page="settingsPage">Налаштування</a>
+      <a href="https://kari0-0.github.io/AquariumControl/index.html">Вийти</a>
+    </nav>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <h1 id="welcome">Вітаємо, Користувачу!</h1>
+        <p id="overview">Огляд вашої системи розумного акваріума</p>
+      </div>
+      <div class="controls">
+        <button onclick="toggleLang()">UA / EN</button>
+        <button onclick="toggleTheme()">☀️ / 🌙</button>
+      </div>
+    </header>
+
+    <!-- ГОЛОВНА -->
+    <div class="dashboard" id="homePage">
+      <div class="card">
+        <h2>Графік температури</h2>
+        <canvas id="tempChart"></canvas>
+      </div>
+      <div class="card">
+        <h2>Графік тиску</h2>
+        <canvas id="pressureChart"></canvas>
+      </div>
+      <div class="card">
+        <h2>Остання статистика</h2>
+        <div class="stat-box">
+          <span>📦 Корм: 30 г</span>
+          <span>💡 Світло: 12 год</span>
+          <span>🌡 Температура: 24.7°C</span>
+          <span>💧 Кисень: 6.8 мг/л</span>
+          <span>🧪 Аміак: 0.02 мг/л</span>
+          <span>💦 Вологість: 55%</span>
+        </div>
+      </div>
+    </div>
+    <!-- МОЇ АКВАРІУМИ -->
+    <div class="dashboard hidden" id="myAquariums">
+      <div class="card">
+        <h2>Додати новий акваріум</h2>
+        <input type="text" placeholder="Назва" id="aquaName">
+        <input type="text" placeholder="Опис" id="aquaDesc">
+        <input type="text" placeholder="Категорія" id="aquaCategory">
+        <input type="url" placeholder="URL зображення" id="aquaImage">
+        <button onclick="addAquarium()">Додати</button>
+      </div>
+      <div class="dashboard" id="aquaList"></div>
+    </div>
+
+    <!-- СТАТИСТИКА -->
+    <div class="dashboard hidden" id="statsPage">
+      <div class="card">
+        <h2>Статистика</h2>
+        <ul>
+          <li>📦 Корм спожито: 30 г</li>
+          <li>💡 Світло: 12 год</li>
+          <li>🌡 Середня температура: 24.5°C</li>
+          <li>💧 Рівень кисню: 6.8 мг/л</li>
+          <li>🧪 Аміак: 0.02 мг/л</li>
+          <li>💦 Вологість: 55%</li>
+          <li>📊 Останній аналіз: 21.06.2025</li>
+        </ul>
+        <button onclick="downloadReport('json')">⬇️ Завантажити JSON</button>
+        <button onclick="downloadReport('csv')">⬇️ Завантажити CSV</button>
+      </div>
+    </div>
+
+    <!-- АНАЛІТИКА -->
+    <div class="dashboard hidden" id="analyticsPage">
+      <div class="card">
+        <h2>Google Аналітика</h2>
+        <img src="https://images.unsplash.com/photo-1617634667032-7b0cc87df14b" alt="Analytics Banner" style="width:100%;border-radius:10px;margin-bottom:10px;">
+        <p>Всього заходів: <strong>120</strong></p>
+        <p>Середня тривалість сесії: <strong>3 хв</strong></p>
+        <p>Платформи: Android — 70%, iOS — 30%</p>
+      </div>
+    </div>
+
+    <!-- НАЛАШТУВАННЯ -->
+    <div class="dashboard hidden" id="settingsPage">
+      <div class="card">
+        <h2>Налаштування профілю</h2>
+        <p>Ім’я користувача: <input type="text" value="Користувач"></p>
+        <p>Email: <input type="email" value="user@example.com"></p>
+      </div>
+      <div class="card">
+        <h2>Опції</h2>
+        <p>🔔 Сповіщення: <input type="checkbox" checked></p>
+        <p>🦐 Автогодівля: <input type="checkbox"></p>
+        <p>⚡ Режим економії: <input type="checkbox" checked></p>
+        <p>🌈 Темний режим: <input type="checkbox" onchange="toggleTheme()"></p>
+      </div>
+    </div>
+
+    <footer>
+      <p>AquariumControl, 2025 © Розробила Карина</p>
+    </footer>
+  </main>
+<script>
+  // Температурний графік
+  const tempData = {
+    labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
+    datasets: [{
+      label: 'Температура (°C)',
+      data: [24.1, 24.6, 25.0, 24.7, 24.3],
+      borderColor: '#2a95b8',
+      backgroundColor: 'rgba(42, 149, 184, 0.2)',
+      fill: true,
+      tension: 0.3
+    }]
+  };
+
+  new Chart(document.getElementById('tempChart'), {
+    type: 'line',
+    data: tempData,
+    options: {
+      responsive: true,
+      plugins: { legend: { display: true } },
+      scales: {
+        y: {
+          beginAtZero: false,
+          title: { display: true, text: 'Температура, °C' }
+        }
+      }
+    }
+  });
+
+  // Навігація
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const id = btn.getAttribute('data-page');
+      document.querySelectorAll('.dashboard').forEach(section => section.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    });
+  });
+
+  // Тема
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+  }
+
+  // Переклад
+  let lang = 'ua';
+  function toggleLang() {
+    lang = lang === 'ua' ? 'en' : 'ua';
+    const content = {
+      ua: {
+        welcome: 'Вітаємо, Користувачу!',
+        overview: 'Огляд вашої системи розумного акваріума'
+      },
+      en: {
+        welcome: 'Welcome, User!',
+        overview: 'Smart aquarium system overview'
+      }
+    };
+    document.getElementById('welcome').textContent = content[lang].welcome;
+    document.getElementById('overview').textContent = content[lang].overview;
+  }
+
+  // Додати акваріум
+  function addAquarium() {
+    const name = document.getElementById('aquaName').value;
+    const desc = document.getElementById('aquaDesc').value;
+    const category = document.getElementById('aquaCategory').value;
+    const img = document.getElementById('aquaImage').value;
+
+    if (!name || !img) return alert("Введіть назву та зображення!");
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h2>${name}</h2>
+      <p>${desc}</p>
+      <p><strong>Категорія:</strong> ${category}</p>
+      <img src="${img}" alt="aquarium">
+    `;
+    document.getElementById('aquaList').appendChild(card);
+
+    // Очистити поля
+    document.getElementById('aquaName').value = '';
+    document.getElementById('aquaDesc').value = '';
+    document.getElementById('aquaCategory').value = '';
+    document.getElementById('aquaImage').value = '';
+  }
+
+  // Завантаження статистики
+  function downloadReport(type) {
+    const data = {
+      feed: "30 г",
+      light: "12 год",
+      temp: "24.5°C",
+      oxygen: "6.8 мг/л",
+      ammonia: "0.02 мг/л",
+      humidity: "55%",
+      lastCheck: "21.06.2025"
+    };
+
+    let content = "";
+    if (type === "json") {
+      content = JSON.stringify(data, null, 2);
+      downloadFile("report.json", content);
+    } else {
+      content = "Параметр,Значення\n";
+      for (let key in data) {
+        content += `${key},${data[key]}\n`;
+      }
+      downloadFile("report.csv", content);
+    }
+  }
+
+  function downloadFile(filename, content) {
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  }
+
+  // OPTIONAL: Firebase push for aquarium settings
+  // (розкоментуй і додай свій Firebase SDK)
+  /*
+  import { getDatabase, ref, set } from "firebase/database";
+  const db = getDatabase();
+  function saveUserSettings(data) {
+    set(ref(db, 'users/' + userId + '/settings'), data);
+  }
+  */
+</script>
+
