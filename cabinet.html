@@ -191,6 +191,104 @@
   </style>
 </head>
 <body>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Особистий кабінет — Розумний Акваріум</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      background: #f4f9fb;
+      color: #333;
+    }
+    aside {
+      width: 220px;
+      background: #2a95b8;
+      color: white;
+      padding: 20px;
+      float: left;
+      height: 100vh;
+    }
+    aside nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+    }
+    main {
+      margin-left: 240px;
+      padding: 30px;
+    }
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      flex: 1 1 300px;
+    }
+    .log-list {
+      padding-left: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      margin-left: 10px;
+    }
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 20px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #2a95b8;
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
   <aside>
     <h2>Акваріум</h2>
     <nav>
@@ -210,98 +308,65 @@
 
     <div class="dashboard" id="homePage">
       <div class="card">
-        <h2>Стан системи</h2>
-        <p><strong>Акваріумів:</strong> 3</p>
-        <p><strong>Онлайн:</strong> 2</p>
-        <p><strong>Сповіщення:</strong> 1 активне</p>
-        <img src="https://images.unsplash.com/photo-1560185127-6b6c1f6de47d" alt="Акваріум стан">
-      </div>
-      <div class="card">
-        <h2>Останні події</h2>
-        <ul class="log-list">
-          <li>08:00 — Заміна води завершена</li>
-          <li>09:30 — Годування завершено</li>
-          <li>10:00 — Аерація активна</li>
-          <li>10:15 — Додано кондиціонер</li>
-          <li>10:30 — Температура нормалізована</li>
-        </ul>
-      </div>
-      <div class="card">
         <h2>Графік температури</h2>
         <canvas id="tempChart"></canvas>
+      </div>
+      <div class="card">
+        <h2>Автоматизовані акваріуми</h2>
+        <iframe src="https://www.youtube.com/embed/4OqM6v6kWjE" title="Smart Aquarium"></iframe>
       </div>
     </div>
 
     <div class="dashboard hidden" id="myAquariums">
       <div class="card">
         <h2>Акваріум №1</h2>
-        <p>pH: 7.1 | Температура: 25.2°C | Об'єм: 60л</p>
-        <img src="https://images.unsplash.com/photo-1615873968403-f7cc4d729ed1" alt="Акваріум 1">
+        <p>pH: 7.1 | Температура: 25.2°C</p>
+        <img src="https://images.unsplash.com/photo-1615873968403-f7cc4d729ed1" width="100%">
       </div>
       <div class="card">
         <h2>Акваріум №2</h2>
-        <p>pH: 6.9 | Температура: 24.7°C | Об'єм: 120л</p>
-        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8e" alt="Акваріум 2">
-      </div>
-      <div class="card">
-        <h2>Акваріум №3</h2>
-        <p>pH: 7.3 | Температура: 26.0°C | Об'єм: 30л</p>
-        <img src="https://images.unsplash.com/photo-1621623899792-bcb7d7a0e6df" alt="Акваріум 3">
+        <p>pH: 6.9 | Температура: 24.7°C</p>
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8e" width="100%">
       </div>
     </div>
 
     <div class="dashboard hidden" id="statsPage">
       <div class="card">
-        <h2>Споживання</h2>
-        <p>Енергія: 1.4 кВт/день</p>
-        <p>Корм: 35 г/день</p>
-        <p>Освітлення: 12 год/день</p>
-      </div>
-      <div class="card">
-        <h2>Параметри середовища</h2>
-        <p>Температура: 24.5°C</p>
-        <p>Кисень: 6.7 мг/л</p>
-        <p>Аміак: 0.01 мг/л</p>
+        <h2>Статистика</h2>
+        <p>Корм спожито: 30 г</p>
+        <p>Світло: 12 год</p>
       </div>
     </div>
 
     <div class="dashboard hidden" id="settingsPage">
       <div class="card">
         <h2>Налаштування</h2>
-        <p>Інтерфейс: Українська</p>
+        <p>Інтерфейс: <strong>Українська</strong></p>
         <p>Користувач: <strong>Карина</strong></p>
-        <label>Сповіщення
-          <label class="toggle">
-            <input type="checkbox" checked>
-            <span class="slider"></span>
-          </label>
-        </label><br><br>
-        <label>Автогодівля
-          <label class="toggle">
-            <input type="checkbox">
-            <span class="slider"></span>
-          </label>
-        </label><br><br>
-        <label>Режим економії
-          <label class="toggle">
-            <input type="checkbox" checked>
-            <span class="slider"></span>
-          </label>
-        </label>
+
+        <p>Сповіщення
+          <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
+        </p>
+
+        <p>Автогодівля
+          <label class="toggle"><input type="checkbox"><span class="slider"></span></label>
+        </p>
+
+        <p>Режим економії
+          <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
+        </p>
       </div>
     </div>
 
-    <footer>
-      Розробила команда AquariumControl, 2025 ©
-    </footer>
+    <footer><p>Розробила команда AquariumControl, 2025 ©</p></footer>
   </main>
 
   <script>
     const tempData = {
-      labels: ['6:00', '8:00', '10:00', '12:00', '14:00'],
+      labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
       datasets: [{
         label: 'Температура (°C)',
-        data: [23.8, 24.1, 24.5, 25.0, 24.7],
+        data: [24.1, 24.6, 25.0, 24.7, 24.3],
         borderColor: '#2a95b8',
         backgroundColor: 'rgba(42, 149, 184, 0.2)',
         fill: true,
@@ -314,16 +379,11 @@
       data: tempData,
       options: {
         responsive: true,
-        plugins: {
-          legend: { display: true }
-        },
+        plugins: { legend: { display: true }},
         scales: {
           y: {
             beginAtZero: false,
-            title: {
-              display: true,
-              text: 'Температура, °C'
-            }
+            title: { display: true, text: 'Температура, °C' }
           }
         }
       }
@@ -333,9 +393,7 @@
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const targetId = btn.getAttribute('data-page');
-        document.querySelectorAll('.dashboard').forEach(section => {
-          section.classList.add('hidden');
-        });
+        document.querySelectorAll('.dashboard').forEach(section => section.classList.add('hidden'));
         document.getElementById(targetId).classList.remove('hidden');
       });
     });
