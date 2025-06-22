@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Реєстрація — Розумний Акваріум</title>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" />
 
   <!-- Firebase SDK -->
@@ -83,6 +82,24 @@
       background-color: #217a99;
     }
 
+    .google-btn {
+      background-color: #fff;
+      color: #444;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+      margin-top: 15px;
+      padding: 10px 12px;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
     .message {
       margin-top: 15px;
       text-align: center;
@@ -132,22 +149,28 @@
       <input type="password" id="confirmPassword" required />
 
       <button type="submit">Зареєструватися</button>
-      <div class="message success" id="success">Реєстрація успішна! Перенаправлення...</div>
-      <div class="message error" id="error">Помилка: перевірте введені дані.</div>
     </form>
 
+    <!-- Google реєстрація -->
+    <button type="button" class="google-btn" id="googleRegister">
+      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google icon" />
+      Зареєструватися через Google
+    </button>
+
+    <div class="message success" id="success">Реєстрація успішна! Перенаправлення...</div>
+    <div class="message error" id="error">Помилка: перевірте введені дані.</div>
+
     <div class="back-link">
-      <a href="https://kari0-0.github.io/AquariumControl/index.html">← Повернутися на головну</a>
+      <a href="auth.html">← Повернутися до входу</a>
     </div>
   </div>
 
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyAI4d7IyfQih-zXrVQaNIrjpWuC-dYouOw",
       authDomain: "aqua-f2152.firebaseapp.com",
       projectId: "aqua-f2152",
-      storageBucket: "aqua-f2152.firebasestorage.app",
+      storageBucket: "aqua-f2152.appspot.com",
       messagingSenderId: "97760398308",
       appId: "1:97760398308:web:cefbfc96b9ce78cae015f1",
       measurementId: "G-QX28LB37LT"
@@ -156,6 +179,9 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    const success = document.getElementById("success");
+    const error = document.getElementById("error");
+
     document.getElementById("registerForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -163,8 +189,6 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
-      const success = document.getElementById("success");
-      const error = document.getElementById("error");
 
       if (!username || !email || !password || password !== confirmPassword) {
         success.style.display = "none";
@@ -178,11 +202,30 @@
           success.style.display = "block";
           error.style.display = "none";
           setTimeout(() => {
-            window.location.href = "auth.html"; // Переходить до авторизації
+            window.location.href = "loading.html";
           }, 1500);
         })
         .catch((err) => {
           error.textContent = "Помилка: " + err.message;
+          error.style.display = "block";
+          success.style.display = "none";
+        });
+    });
+
+    // Google реєстрація
+    document.getElementById("googleRegister").addEventListener("click", () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(() => {
+          success.textContent = "Google акаунт зареєстровано!";
+          success.style.display = "block";
+          error.style.display = "none";
+          setTimeout(() => {
+            window.location.href = "loading.html";
+          }, 1500);
+        })
+        .catch((err) => {
+          error.textContent = "Помилка Google-реєстрації: " + err.message;
           error.style.display = "block";
           success.style.display = "none";
         });
