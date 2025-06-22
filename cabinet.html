@@ -7,6 +7,16 @@
   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX28LB37LT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QX28LB37LT');
+  </script>
+
   <style>
     :root {
       --bg-light: #f4f9fb;
@@ -18,19 +28,12 @@
       --accent: #2a95b8;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', sans-serif;
-    }
-
     body {
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
       background-color: var(--bg-light);
       color: var(--text-light);
+      display: flex;
       transition: 0.3s ease;
     }
 
@@ -44,32 +47,14 @@
       background-color: var(--accent);
       color: white;
       padding: 20px;
+      flex-shrink: 0;
     }
 
-    aside h2 {
-      margin-bottom: 30px;
-      font-size: 20px;
-    }
-  iframe {
-      width: 100%;
-      max-width: 1200px;
-      height: 600px;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-top: 20px;
-    }
-
-    .note {
-      font-size: 14px;
-      color: #666;
-      margin-top: 10px;
-    }
     aside nav a {
       display: block;
       color: white;
       text-decoration: none;
-      margin-bottom: 12px;
+      margin: 12px 0;
       padding: 8px;
       border-radius: 6px;
       transition: background-color 0.3s;
@@ -85,10 +70,10 @@
     }
 
     header {
-      margin-bottom: 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 30px;
     }
 
     .dashboard {
@@ -102,23 +87,10 @@
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: background-color 0.3s;
     }
 
     body.dark .card {
       background-color: var(--card-bg-dark);
-    }
-
-    .card h2 {
-      margin-bottom: 10px;
-      font-size: 18px;
-      color: #217a99;
-    }
-
-    .log-list {
-      max-height: 200px;
-      overflow-y: auto;
-      padding-left: 20px;
     }
 
     .card img {
@@ -127,60 +99,75 @@
       margin-top: 10px;
     }
 
-    .hidden {
-      display: none;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-    }
-
     .controls button {
       background-color: var(--accent);
       color: white;
       border: none;
-      padding: 6px 12px;
+      padding: 8px 12px;
+      margin-left: 10px;
       border-radius: 6px;
       cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 45px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      border-radius: 24px;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: .4s;
+    }
+
+    .toggle input:checked + .slider {
+      background-color: var(--accent);
+    }
+
+    .toggle input:checked + .slider:before {
+      transform: translateX(21px);
     }
 
     footer {
       text-align: center;
       margin-top: 40px;
-      color: #777;
       font-size: 14px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 315px;
-      border: none;
-      margin-top: 10px;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-      }
-
-      aside {
-        width: 100%;
-        flex-direction: row;
-        position: fixed;
-        bottom: 0;
-        z-index: 1000;
-        display: flex;
-        justify-content: space-around;
-      }
-
-      aside h2 {
-        display: none;
-      }
-
-      main {
-        padding-bottom: 120px;
-      }
+      color: #777;
     }
   </style>
 </head>
@@ -210,12 +197,12 @@
 
     <div class="dashboard" id="homePage">
       <div class="card">
-        <h2>Графік температури</h2>
+        <h2 id="tempChartTitle">Графік температури</h2>
         <canvas id="tempChart"></canvas>
       </div>
       <div class="card">
         <h2>Автоматизовані акваріуми</h2>
-        <iframe src="https://www.youtube.com/embed/wkwBMXkDIEE?si=OgmaUjbQCxMNjcew" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/wkwBMXkDIEE" allowfullscreen></iframe>
       </div>
     </div>
 
@@ -223,45 +210,37 @@
       <div class="card">
         <h2>Акваріум №1</h2>
         <p>pH: 7.1 | Температура: 25.2°C</p>
-        <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg">
+        <img src="https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg">
       </div>
       <div class="card">
         <h2>Акваріум №2</h2>
         <p>pH: 6.9 | Температура: 24.7°C</p>
-        <img src="https://www.vmcdn.ca/f/files/barrietoday/barpetsbigalsangeljune2023.jpg">
+        <img src="https://images.pexels.com/photos/161931/fish-tank-reef-aquarium-fish-161931.jpeg">
       </div>
     </div>
 
     <div class="dashboard hidden" id="statsPage">
       <div class="card">
-        <h2>Статистика</h2>
-        <p>Корм спожито: 30 г</p>
-        <p>Світло: 12 год</p>
-        <p>Середня температура: 24.5°C</p>
-        <p>Рівень кисню: 6.8 мг/л</p>
-        <p>Рівень аміаку: 0.02 мг/л</p>
-        <p>Вологість: 55%</p>
-        <p>Останній аналіз: 21.06.2025</p>
-        <p>Витрати води: 14.2 л/тиждень</p>
-
-
- <h1>Google Аналітика</h1>
-  <p class="note">Для перегляду вам потрібно увійти в обліковий запис Google, який має доступ до Google Analytics</p>
-
-  <!-- Вставка Google Analytics iframe (при наявності доступу) -->
-  <iframe src="https://analytics.google.com/analytics/web/" allowfullscreen></iframe>
-
+        <h2>Google Аналітика</h2>
+        <p class="note">Це тестовий iframe із доступом до Google Analytics (необхідна авторизація Google):</p>
+        <iframe src="https://analytics.google.com/analytics/web/" allowfullscreen></iframe>
       </div>
     </div>
 
     <div class="dashboard hidden" id="settingsPage">
       <div class="card">
         <h2>Налаштування</h2>
-        <p>Інтерфейс: Українська</p><br>
-        <p>Користувач: <strong>Користувач</strong></p><br>
-        <p>Сповіщення: <input type="checkbox" checked></p><br>
-        <p>Автогодівля: <input type="checkbox"></p><br>
-        <p>Економія: <input type="checkbox" checked></p>
+        <p>Інтерфейс: <strong id="langLabel">Українська</strong></p>
+        <p>Користувач: <strong>Користувач</strong></p>
+        <p>Сповіщення:
+          <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
+        </p>
+        <p>Автогодівля:
+          <label class="toggle"><input type="checkbox"><span class="slider"></span></label>
+        </p>
+        <p>Енергозбереження:
+          <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
+        </p>
       </div>
     </div>
 
@@ -269,57 +248,57 @@
   </main>
 
   <script>
-    const tempData = {
-      labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
-      datasets: [{
-        label: 'Температура (°C)',
-        data: [24.1, 24.6, 25.0, 24.7, 24.3],
-        borderColor: '#2a95b8',
-        backgroundColor: 'rgba(42, 149, 184, 0.2)',
-        fill: true,
-        tension: 0.3
-      }]
-    };
-
-    new Chart(document.getElementById('tempChart'), {
-      type: 'line',
-      data: tempData,
-      options: {
-        responsive: true,
-        plugins: { legend: { display: true }},
-        scales: {
-          y: {
-            beginAtZero: false,
-            title: { display: true, text: 'Температура, °C' }
-          }
-        }
-      }
-    });
-
-    // Навігація
+    const pages = document.querySelectorAll('.dashboard');
     document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.addEventListener('click', e => {
         e.preventDefault();
-        const id = btn.getAttribute('data-page');
-        document.querySelectorAll('.dashboard').forEach(section => section.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
+        const page = btn.getAttribute('data-page');
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById(page).classList.remove('hidden');
       });
     });
 
-    // Тема
     function toggleTheme() {
       document.body.classList.toggle('dark');
     }
 
-    // Мова
     let lang = 'ua';
     function toggleLang() {
       lang = lang === 'ua' ? 'en' : 'ua';
       document.getElementById('welcome').textContent =
         lang === 'ua' ? 'Вітаємо, Користувачу!' : 'Welcome, User!';
       document.getElementById('overview').textContent =
-        lang === 'ua' ? 'Огляд вашої системи розумного акваріума' : 'Smart aquarium system overview';
+        lang === 'ua' ? 'Огляд вашої системи розумного акваріума' : 'Smart Aquarium System Overview';
+      document.getElementById('tempChartTitle').textContent =
+        lang === 'ua' ? 'Графік температури' : 'Temperature Chart';
+      document.getElementById('langLabel').textContent =
+        lang === 'ua' ? 'Українська' : 'English';
     }
+
+    new Chart(document.getElementById('tempChart'), {
+      type: 'line',
+      data: {
+        labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
+        datasets: [{
+          label: 'Температура (°C)',
+          data: [24.1, 24.6, 25.0, 24.7, 24.3],
+          borderColor: '#2a95b8',
+          backgroundColor: 'rgba(42, 149, 184, 0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: true }},
+        scales: {
+          y: {
+            title: { display: true, text: 'Температура (°C)' },
+            beginAtZero: false
+          }
+        }
+      }
+    });
   </script>
 </body>
 </html>
