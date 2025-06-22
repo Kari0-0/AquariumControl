@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Реєстрація — Розумний Акваріум</title>
 
-  <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.freepik.com/512/18284/18284610.png" />
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -25,9 +26,40 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bubbles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: rise 10s infinite ease-in;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
     }
 
     .register-box {
+      position: relative;
+      z-index: 1;
       background-color: #fff;
       padding: 40px;
       border-radius: 16px;
@@ -50,9 +82,7 @@
       font-weight: 600;
     }
 
-    .register-box input[type="text"],
-    .register-box input[type="email"],
-    .register-box input[type="password"] {
+    .register-box input {
       width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
@@ -133,6 +163,21 @@
   </style>
 </head>
 <body>
+
+  <!-- Фон з бульбашками -->
+  <div class="bubbles">
+    <script>
+      for (let i = 0; i < 30; i++) {
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.style.width = bubble.style.height = `${Math.random() * 30 + 10}px`;
+        bubble.style.left = `${Math.random() * 100}%`;
+        bubble.style.animationDuration = `${Math.random() * 8 + 5}s`;
+        document.querySelector('.bubbles').appendChild(bubble);
+      }
+    </script>
+  </div>
+
   <div class="register-box">
     <h2>Реєстрація нового користувача</h2>
     <form id="registerForm">
@@ -151,7 +196,6 @@
       <button type="submit">Зареєструватися</button>
     </form>
 
-    <!-- Google реєстрація -->
     <button type="button" class="google-btn" id="googleRegister">
       <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google icon" />
       Зареєструватися через Google
@@ -201,9 +245,7 @@
         .then(() => {
           success.style.display = "block";
           error.style.display = "none";
-          setTimeout(() => {
-            window.location.href = "loading.html";
-          }, 1500);
+          setTimeout(() => window.location.href = "loading.html", 1500);
         })
         .catch((err) => {
           error.textContent = "Помилка: " + err.message;
@@ -212,7 +254,6 @@
         });
     });
 
-    // Google реєстрація
     document.getElementById("googleRegister").addEventListener("click", () => {
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
@@ -220,9 +261,7 @@
           success.textContent = "Google акаунт зареєстровано!";
           success.style.display = "block";
           error.style.display = "none";
-          setTimeout(() => {
-            window.location.href = "loading.html";
-          }, 1500);
+          setTimeout(() => window.location.href = "loading.html", 1500);
         })
         .catch((err) => {
           error.textContent = "Помилка Google-реєстрації: " + err.message;
