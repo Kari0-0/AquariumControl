@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Авторизація — Розумний Акваріум</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" />
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -111,6 +114,23 @@
     .note a:hover {
       text-decoration: underline;
     }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .back-link a {
+      color: #2a95b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -131,10 +151,13 @@
     <div class="note">
       Не маєте акаунту? <a href="registration.html">Зареєструватися</a>
     </div>
+
+    <div class="back-link">
+      <a href="https://kari0-0.github.io/AquariumControl/index.html">← Повернутися на головну</a>
+    </div>
   </div>
 
   <script>
-    // Firebase конфіг
     const firebaseConfig = {
       apiKey: "AIzaSyAI4d7IyfQih-zXrVQaNIrjpWuC-dYouOw",
       authDomain: "aqua-f2152.firebaseapp.com",
@@ -161,7 +184,7 @@
           success.style.display = "block";
           error.style.display = "none";
           setTimeout(() => {
-            window.location.href = "cabinet.html"; // Успішний вхід
+            window.location.href = "cabinet.html";
           }, 1500);
         })
         .catch(err => {
@@ -171,7 +194,7 @@
 
           if (err.code === 'auth/user-not-found') {
             setTimeout(() => {
-              window.location.href = "registration.html"; // Якщо не знайдено — реєстрація
+              window.location.href = "registration.html";
             }, 2000);
           }
         });
