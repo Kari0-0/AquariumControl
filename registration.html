@@ -119,20 +119,22 @@
   </div>
 
   <script>
-    // 🔐 ВСТАВ СВОЇ ДАНІ З Firebase → Project Settings
+    // Firebase конфігурація
     const firebaseConfig = {
-      apiKey: "ТВОЯ_API_KEY",
-      authDomain: "ТВОЯ_PROJECT_ID.firebaseapp.com",
-      projectId: "ТВОЯ_PROJECT_ID",
-      storageBucket: "ТВОЯ_PROJECT_ID.appspot.com",
-      messagingSenderId: "XXXXXXXXXXXX",
-      appId: "1:XXXXXXXXXXXX:web:XXXXXXX"
+      apiKey: "AIzaSyAI4d7IyfQih-zXrVQaNIrjpWuC-dYouOw",
+      authDomain: "aqua-f2152.firebaseapp.com",
+      projectId: "aqua-f2152",
+      storageBucket: "aqua-f2152.firebasestorage.app",
+      messagingSenderId: "97760398308",
+      appId: "1:97760398308:web:cefbfc96b9ce78cae015f1",
+      measurementId: "G-QX28LB37LT"
     };
 
-    // 🔧 Ініціалізація Firebase
+    // Ініціалізація Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    // Обробка реєстрації
     document.getElementById("registerForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -150,13 +152,12 @@
         return;
       }
 
-      // 🔐 Створення користувача через Firebase
       auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
           success.style.display = "block";
           error.style.display = "none";
           setTimeout(() => {
-            window.location.href = "login.html";
+            window.location.href = "login.html"; // 🔁 сторінка входу
           }, 1500);
         })
         .catch((err) => {
