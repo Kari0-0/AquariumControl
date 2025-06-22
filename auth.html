@@ -41,7 +41,7 @@
     .bubble {
       position: absolute;
       bottom: -100px;
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       animation: rise 10s infinite ease-in;
     }
@@ -99,14 +99,27 @@
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
-    }
-
-    .google-btn {
-      background-color: #db4437;
+      transition: background-color 0.3s;
     }
 
     .login-box button:hover {
-      opacity: 0.9;
+      background-color: #3177a5;
+    }
+
+    .google-btn {
+      background-color: #fff;
+      color: #444;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
     }
 
     .error-message,
@@ -138,13 +151,17 @@
       text-decoration: none;
       font-weight: 600;
     }
+
+    .note a:hover,
+    .back-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Фон з бульбашками -->
+  <!-- Анімація бульбашок -->
   <div class="bubbles">
-    <!-- Генеруємо 30 бульбашок -->
     <script>
       for (let i = 0; i < 30; i++) {
         const bubble = document.createElement("div");
@@ -169,7 +186,11 @@
       <button type="submit">Увійти</button>
     </form>
 
-    <button type="button" class="google-btn" id="googleLogin">🔐 Увійти через Google</button>
+    <!-- Google login button -->
+    <button type="button" class="google-btn" id="googleLogin">
+      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google icon" />
+      Увійти через Google
+    </button>
 
     <div class="error-message" id="error">Помилка: користувача не знайдено або невірний пароль.</div>
     <div class="success-message" id="success">Вхід успішний! Перенаправлення...</div>
@@ -188,7 +209,7 @@
       apiKey: "AIzaSyAI4d7IyfQih-zXrVQaNIrjpWuC-dYouOw",
       authDomain: "aqua-f2152.firebaseapp.com",
       projectId: "aqua-f2152",
-      storageBucket: "aqua-f2152.firebasestorage.app",
+      storageBucket: "aqua-f2152.appspot.com",
       messagingSenderId: "97760398308",
       appId: "1:97760398308:web:cefbfc96b9ce78cae015f1",
       measurementId: "G-QX28LB37LT"
@@ -202,7 +223,6 @@
 
     document.getElementById("loginForm").addEventListener("submit", function (e) {
       e.preventDefault();
-
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
@@ -214,14 +234,11 @@
         })
         .catch(err => {
           error.style.display = "block";
+          error.textContent = "Помилка: " + err.message;
           success.style.display = "none";
-          if (err.code === 'auth/user-not-found') {
-            setTimeout(() => window.location.href = "registration.html", 2000);
-          }
         });
     });
 
-    // Вхід через Google
     document.getElementById("googleLogin").addEventListener("click", () => {
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
