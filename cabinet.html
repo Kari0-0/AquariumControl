@@ -4,11 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Особистий кабінет — Розумний Акваріум</title>
-   <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1587/1587069.png">
   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
+    :root {
+      --bg-light: #f4f9fb;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #eee;
+      --card-bg-light: #fff;
+      --card-bg-dark: #2a2a2a;
+      --accent: #2a95b8;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -18,22 +27,22 @@
 
     body {
       display: flex;
-      flex-direction: row;
       min-height: 100vh;
-      background-color: #f4f9fb;
-      color: #333;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
     }
 
     aside {
       width: 220px;
-      background-color: #2a95b8;
+      background-color: var(--accent);
       color: white;
       padding: 20px;
-    }
-
-    aside h2 {
-      margin-bottom: 30px;
-      font-size: 20px;
     }
 
     aside nav a {
@@ -53,11 +62,27 @@
     main {
       flex-grow: 1;
       padding: 30px;
-      padding-bottom: 80px;
     }
 
     header {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .controls button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--accent);
+      color: white;
+      cursor: pointer;
     }
 
     .dashboard {
@@ -67,77 +92,26 @@
     }
 
     .card {
-      background-color: #fff;
+      background-color: var(--card-bg-light);
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: background-color 0.3s;
+    }
+
+    body.dark .card {
+      background-color: var(--card-bg-dark);
     }
 
     .card h2 {
+      color: var(--accent);
       margin-bottom: 10px;
-      font-size: 18px;
-      color: #217a99;
     }
 
     .log-list {
       max-height: 200px;
       overflow-y: auto;
       padding-left: 20px;
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-    .toggle {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 28px;
-    }
-
-    .toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 28px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-
-    .toggle input:checked + .slider {
-      background-color: #2a95b8;
-    }
-
-    .toggle input:checked + .slider:before {
-      transform: translateX(22px);
-    }
-
-    canvas {
-      max-width: 100%;
     }
 
     footer {
@@ -147,151 +121,25 @@
       font-size: 14px;
     }
 
+    canvas {
+      max-width: 100%;
+    }
+
     .hidden {
       display: none;
     }
 
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-      }
-
-      aside {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        padding: 10px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        background-color: #2a95b8;
-        z-index: 1000;
-      }
-
-      aside h2 {
-        display: none;
-      }
-
-      aside nav {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-around;
-      }
-
-      aside nav a {
-        margin: 0;
-        padding: 8px 10px;
-        font-size: 14px;
-      }
-
-      main {
-        padding-bottom: 120px;
-      }
-    }
-  </style>
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Особистий кабінет — Розумний Акваріум</title>
-  <link rel="icon" href=" https://www.pexels.com/photo/common-clownfish-3626111/" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      background: #f4f9fb;
-      color: #333;
-    }
-    aside {
-      width: 220px;
-      background: #2a95b8;
-      color: white;
-      padding: 20px;
-      float: left;
-      height: 100vh;
-    }
-    aside nav a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin: 10px 0;
-    }
-    main {
-      margin-left: 240px;
-      padding: 30px;
-    }
-    .dashboard {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      flex: 1 1 300px;
-    }
-    .log-list {
-      padding-left: 20px;
-    }
-    .hidden {
-      display: none;
-    }
-    .toggle {
-      position: relative;
-      display: inline-block;
-      width: 40px;
-      height: 20px;
-      margin-left: 10px;
-    }
-    .toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 20px;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 14px;
-      width: 14px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-    input:checked + .slider {
-      background-color: #2a95b8;
-    }
-    input:checked + .slider:before {
-      transform: translateX(20px);
-    }
     iframe {
       width: 100%;
       height: 315px;
       border: none;
-      margin-top: 20px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <aside>
-    <h2>Акваріум</h2>
+    <h2 id="title-aside">Акваріум</h2>
     <nav>
       <a href="#" class="nav-btn" data-page="homePage">Головна</a>
       <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
@@ -303,70 +151,66 @@
 
   <main>
     <header>
-      <h1>Вітаємо, Карина!</h1>
-      <p>Огляд вашої системи розумного акваріума</p>
+      <div>
+        <h1 id="welcome">Вітаємо, Користувачу!</h1>
+        <p id="overview">Огляд вашої системи розумного акваріума</p>
+      </div>
+      <div class="controls">
+        <button onclick="toggleLang()">UA/EN</button>
+        <button onclick="toggleTheme()">☀️/🌙</button>
+      </div>
     </header>
 
     <div class="dashboard" id="homePage">
       <div class="card">
-        <h2>Графік температури</h2>
+        <h2>Температурний графік</h2>
         <canvas id="tempChart"></canvas>
       </div>
       <div class="card">
-        <h2>Автоматизовані акваріуми</h2>
-     <iframe width="560" height="315" src="https://www.youtube.com/embed/wkwBMXkDIEE?si=OgmaUjbQCxMNjcew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <h2>Відео</h2>
+        <iframe src="https://www.youtube.com/embed/wkwBMXkDIEE?si=OgmaUjbQCxMNjcew" allowfullscreen></iframe>
       </div>
     </div>
 
     <div class="dashboard hidden" id="myAquariums">
       <div class="card">
         <h2>Акваріум №1</h2>
-        <p>pH: 7.1 | Температура: 25.2°C</p>
-        <img src="https://www.aquatechwatersystems.com/blog/wp-content/uploads/2022/04/ro-aquarium.jpg" width="100%">
+        <p>pH: 7.2 | Температура: 25.1°C</p>
+        <img src="https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg" width="100%">
       </div>
       <div class="card">
         <h2>Акваріум №2</h2>
-        <p>pH: 6.9 | Температура: 24.7°C</p>
-        <img src="https://www.vmcdn.ca/f/files/barrietoday/barpetsbigalsangeljune2023.jpg" width="100%">
+        <p>pH: 6.9 | Температура: 24.8°C</p>
+        <img src="https://images.pexels.com/photos/45895/fish-fishes-aquarium-zoo-45895.jpeg" width="100%">
       </div>
     </div>
 
     <div class="dashboard hidden" id="statsPage">
       <div class="card">
         <h2>Статистика</h2>
-  <p>Корм спожито: 30 г</p>
-  <p>Світло: 12 год</p>
-  <p>Середня температура: 24.5°C</p>
-  <p>Рівень кисню: 6.8 мг/л</p>
-  <p>Рівень аміаку: 0.02 мг/л</p>
-  <p>Вологість повітря в кімнаті: 55%</p>
-  <p>Останній аналіз води: 21.06.2025</p>
-  <p>Витрати води за тиждень: 14.2 л</p>
-  <img src="https://www.aquatechwatersystems.com/blog/wp-content/uploads/2022/04/ro-aquarium.jpg" alt="Акваріум статистика">
+        <p>Корм спожито: 30 г</p>
+        <p>Світло: 12 год</p>
+        <p>Середня температура: 24.5°C</p>
+        <p>Кисень: 6.7 мг/л</p>
+        <p>Аміак: 0.01 мг/л</p>
+        <p>Аналіз води: 21.06.2025</p>
       </div>
     </div>
 
     <div class="dashboard hidden" id="settingsPage">
       <div class="card">
-        <h2>Налаштування</h2><br>
-        <p>Інтерфейс: <strong>Українська</strong></p><br>
-        <p>Користувач: <strong>Карина</strong></p><br>
-
-        <p>Сповіщення
-          <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
-        </p>
-<br>
-        <p>Автогодівля
-          <label class="toggle"><input type="checkbox"><span class="slider"></span></label>
-        </p>
-<br>
-        <p>Режим економії
-          <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
-        </p>
+        <h2>Налаштування</h2>
+        <p>Інтерфейс: Українська</p><br>
+        <p>Користувач: <strong>Користувач</strong></p><br>
+        <p>Сповіщення: <input type="checkbox" checked></p><br>
+        <p>Автогодівля: <input type="checkbox"></p><br>
+        <p>Економія: <input type="checkbox" checked></p>
       </div>
     </div>
 
-    <footer><p> AquariumControl, 2025 ©</p></footer>
+    <footer>
+      AquariumControl, 2025 ©
+    </footer>
   </main>
 
   <script>
@@ -374,7 +218,7 @@
       labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
       datasets: [{
         label: 'Температура (°C)',
-        data: [24.1, 24.6, 25.0, 24.7, 24.3],
+        data: [24.0, 24.5, 25.1, 24.7, 24.3],
         borderColor: '#2a95b8',
         backgroundColor: 'rgba(42, 149, 184, 0.2)',
         fill: true,
@@ -387,7 +231,7 @@
       data: tempData,
       options: {
         responsive: true,
-        plugins: { legend: { display: true }},
+        plugins: { legend: { display: true } },
         scales: {
           y: {
             beginAtZero: false,
@@ -397,14 +241,30 @@
       }
     });
 
+    // Навігація між сторінками
     document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         e.preventDefault();
-        const targetId = btn.getAttribute('data-page');
-        document.querySelectorAll('.dashboard').forEach(section => section.classList.add('hidden'));
-        document.getElementById(targetId).classList.remove('hidden');
+        const id = btn.getAttribute('data-page');
+        document.querySelectorAll('.dashboard').forEach(d => d.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
       });
     });
+
+    // Перемикач теми
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+
+    // Перемикач мови
+    let lang = 'ua';
+    function toggleLang() {
+      lang = lang === 'ua' ? 'en' : 'ua';
+      document.getElementById('welcome').textContent = lang === 'ua' ? 'Вітаємо, Користувачу!' : 'Welcome, User!';
+      document.getElementById('overview').textContent = lang === 'ua'
+        ? 'Огляд вашої системи розумного акваріума'
+        : 'Overview of your smart aquarium system';
+    }
   </script>
 </body>
 </html>
