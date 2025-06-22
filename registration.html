@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Реєстрація — Розумний Акваріум</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" />
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -18,7 +21,10 @@
     }
 
     body {
-      background: linear-gradient(to right, #e2f3f5, #ffffff);
+      background-image: url('https://www.usatoday.com/gcdn/presto/2022/06/22/USAT/6dd7eb66-a229-49da-b030-c2faf98f69b1-GettyImages-153782658.jpg');
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: blur(2px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,10 +32,10 @@
     }
 
     .register-box {
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.95);
       padding: 40px;
       border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 450px;
     }
@@ -119,7 +125,7 @@
   </div>
 
   <script>
-    // Firebase конфігурація
+    // Firebase config із твоїми даними
     const firebaseConfig = {
       apiKey: "AIzaSyAI4d7IyfQih-zXrVQaNIrjpWuC-dYouOw",
       authDomain: "aqua-f2152.firebaseapp.com",
@@ -134,7 +140,7 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Обробка реєстрації
+    // Обробка форми
     document.getElementById("registerForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -157,7 +163,7 @@
           success.style.display = "block";
           error.style.display = "none";
           setTimeout(() => {
-            window.location.href = "login.html"; // 🔁 сторінка входу
+            window.location.href = "login.html";
           }, 1500);
         })
         .catch((err) => {
