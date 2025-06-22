@@ -2,9 +2,9 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Особистий кабінет — Розумний Акваріум</title>
-  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tropical_fish_icon.png/600px-Tropical_fish_icon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Кабінет — Розумний Акваріум</title>
+  <link rel="icon" href="https://cdn-icons-png.freepik.com/512/18284/18284610.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -50,21 +50,7 @@
       margin-bottom: 30px;
       font-size: 20px;
     }
-  iframe {
-      width: 100%;
-      max-width: 1200px;
-      height: 600px;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-top: 20px;
-    }
 
-    .note {
-      font-size: 14px;
-      color: #666;
-      margin-top: 10px;
-    }
     aside nav a {
       display: block;
       color: white;
@@ -127,10 +113,6 @@
       margin-top: 10px;
     }
 
-    .hidden {
-      display: none;
-    }
-
     .controls {
       display: flex;
       gap: 10px;
@@ -145,11 +127,8 @@
       cursor: pointer;
     }
 
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #777;
-      font-size: 14px;
+    .hidden {
+      display: none;
     }
 
     iframe {
@@ -157,6 +136,20 @@
       height: 315px;
       border: none;
       margin-top: 10px;
+    }
+
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+      font-size: 14px;
     }
 
     @media (max-width: 768px) {
@@ -185,142 +178,3 @@
   </style>
 </head>
 <body>
-  <aside>
-    <h2>Акваріум</h2>
-    <nav>
-      <a href="#" class="nav-btn" data-page="homePage">Головна</a>
-      <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
-      <a href="#" class="nav-btn" data-page="statsPage">Статистика</a>
-      <a href="#" class="nav-btn" data-page="settingsPage">Налаштування</a>
-      <a href="https://kari0-0.github.io/AquariumControl/index.html">Вийти</a>
-    </nav>
-  </aside>
-
-  <main>
-    <header>
-      <div>
-        <h1 id="welcome">Вітаємо, Користувачу!</h1>
-        <p id="overview">Огляд вашої системи розумного акваріума</p>
-      </div>
-      <div class="controls">
-        <button onclick="toggleLang()">UA / EN</button>
-        <button onclick="toggleTheme()">☀️ / 🌙</button>
-      </div>
-    </header>
-
-    <div class="dashboard" id="homePage">
-      <div class="card">
-        <h2>Графік температури</h2>
-        <canvas id="tempChart"></canvas>
-      </div>
-      <div class="card">
-        <h2>Автоматизовані акваріуми</h2>
-        <iframe src="https://www.youtube.com/embed/wkwBMXkDIEE?si=OgmaUjbQCxMNjcew" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <div class="dashboard hidden" id="myAquariums">
-      <div class="card">
-        <h2>Акваріум №1</h2>
-        <p>pH: 7.1 | Температура: 25.2°C</p>
-        <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg">
-      </div>
-      <div class="card">
-        <h2>Акваріум №2</h2>
-        <p>pH: 6.9 | Температура: 24.7°C</p>
-        <img src="https://www.vmcdn.ca/f/files/barrietoday/barpetsbigalsangeljune2023.jpg">
-      </div>
-    </div>
-
-    <div class="dashboard hidden" id="statsPage">
-      <div class="card">
-        <h2>Статистика</h2>
-        <p>Корм спожито: 30 г</p>
-        <p>Світло: 12 год</p>
-        <p>Середня температура: 24.5°C</p>
-        <p>Рівень кисню: 6.8 мг/л</p>
-        <p>Рівень аміаку: 0.02 мг/л</p>
-        <p>Вологість: 55%</p>
-        <p>Останній аналіз: 21.06.2025</p>
-        <p>Витрати води: 14.2 л/тиждень</p>
-
-
- <h1>Google Аналітика</h1>
-  <p class="note">Для перегляду вам потрібно увійти в обліковий запис Google, який має доступ до Google Analytics</p>
-
-  <!-- Вставка Google Analytics iframe (при наявності доступу) -->
-  <iframe src="https://analytics.google.com/analytics/web/" allowfullscreen></iframe>
-
-      </div>
-    </div>
-
-    <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Налаштування</h2>
-        <p>Інтерфейс: Українська</p><br>
-        <p>Користувач: <strong>Користувач</strong></p><br>
-        <p>Сповіщення: <input type="checkbox" checked></p><br>
-        <p>Автогодівля: <input type="checkbox"></p><br>
-        <p>Економія: <input type="checkbox" checked></p>
-      </div>
-    </div>
-
-    <footer><p>AquariumControl, 2025 ©</p></footer>
-  </main>
-
-  <script>
-    const tempData = {
-      labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
-      datasets: [{
-        label: 'Температура (°C)',
-        data: [24.1, 24.6, 25.0, 24.7, 24.3],
-        borderColor: '#2a95b8',
-        backgroundColor: 'rgba(42, 149, 184, 0.2)',
-        fill: true,
-        tension: 0.3
-      }]
-    };
-
-    new Chart(document.getElementById('tempChart'), {
-      type: 'line',
-      data: tempData,
-      options: {
-        responsive: true,
-        plugins: { legend: { display: true }},
-        scales: {
-          y: {
-            beginAtZero: false,
-            title: { display: true, text: 'Температура, °C' }
-          }
-        }
-      }
-    });
-
-    // Навігація
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const id = btn.getAttribute('data-page');
-        document.querySelectorAll('.dashboard').forEach(section => section.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-      });
-    });
-
-    // Тема
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-    }
-
-    // Мова
-    let lang = 'ua';
-    function toggleLang() {
-      lang = lang === 'ua' ? 'en' : 'ua';
-      document.getElementById('welcome').textContent =
-        lang === 'ua' ? 'Вітаємо, Користувачу!' : 'Welcome, User!';
-      document.getElementById('overview').textContent =
-        lang === 'ua' ? 'Огляд вашої системи розумного акваріума' : 'Smart aquarium system overview';
-    }
-  </script>
-</body>
-</html>
-
