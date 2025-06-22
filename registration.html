@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Реєстрація — Розумний Акваріум</title>
+  <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -139,6 +143,50 @@
         window.location.href = "login.html"; // Перенаправлення на сторінку входу
       }, 1500);
     });
+    const firebaseConfig = {
+  apiKey: "ТВОЯ_API_KEY",
+  authDomain: "ТВОЯ_PROJECT_ID.firebaseapp.com",
+  projectId: "ТВОЯ_PROJECT_ID",
+  storageBucket: "ТВОЯ_PROJECT_ID.appspot.com",
+  messagingSenderId: "XXXXXXXXXXXX",
+  appId: "1:XXXXXXXXXXXX:web:XXXXXXX"
+};
+
+// Ініціалізація
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+document.getElementById("registerForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const success = document.getElementById("success");
+  const error = document.getElementById("error");
+
+  if (!username || !email || !password || password !== confirmPassword) {
+    success.style.display = "none";
+    error.textContent = "Помилка: перевірте введені дані.";
+    error.style.display = "block";
+    return;
+  }
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      success.style.display = "block";
+      error.style.display = "none";
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+    })
+    .catch((err) => {
+      error.textContent = "Помилка: " + err.message;
+      error.style.display = "block";
+      success.style.display = "none";
+    });
+});
+
   </script>
 </body>
 </html>
