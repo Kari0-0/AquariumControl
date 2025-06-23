@@ -135,6 +135,73 @@
                 addLog(aerationOn ? 'Увімкнення аерації.' : 'Вимкнення аерації.');
             });
         });
+        <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const feedButton = document.getElementById('feedButton');
+        const lightButton = document.getElementById('lightButton');
+        const filterButton = document.getElementById('filterButton');
+        const aerationButton = document.getElementById('aerationButton');
+        const logList = document.getElementById('logList');
+
+        const temperatureDisplay = document.getElementById('temperature');
+        const phDisplay = document.getElementById('ph');
+
+        let lightOn = false;
+        let filterOn = false;
+        let aerationOn = false;
+
+        function addLog(message) {
+            const li = document.createElement('li');
+            li.textContent = `${new Date().toLocaleString()} - ${message}`;
+            logList.prepend(li);
+        }
+
+        function toggleButton(button, state) {
+            button.classList.toggle('active-button', state);
+        }
+
+        feedButton.addEventListener('click', () => {
+            addLog('Годування риб активовано.');
+            feedButton.classList.add('active-button');
+            setTimeout(() => feedButton.classList.remove('active-button'), 500);
+        });
+
+        lightButton.addEventListener('click', () => {
+            lightOn = !lightOn;
+            toggleButton(lightButton, lightOn);
+            addLog(lightOn ? 'Увімкнення освітлення.' : 'Вимкнення освітлення.');
+        });
+
+        filterButton.addEventListener('click', () => {
+            filterOn = !filterOn;
+            toggleButton(filterButton, filterOn);
+            addLog(filterOn ? 'Увімкнення фільтрації.' : 'Вимкнення фільтрації.');
+        });
+
+        aerationButton.addEventListener('click', () => {
+            aerationOn = !aerationOn;
+            toggleButton(aerationButton, aerationOn);
+            addLog(aerationOn ? 'Увімкнення аерації.' : 'Вимкнення аерації.');
+        });
+
+        // Генерація випадкових значень для температури та pH
+        function updateSensorValues() {
+            const temp = (22 + Math.random() * 4).toFixed(1); // від 22.0 до 26.0
+            const ph = (6.5 + Math.random() * 1).toFixed(2);  // від 6.5 до 7.5
+
+            temperatureDisplay.textContent = `${temp} °C`;
+            phDisplay.textContent = ph;
+
+            addLog(`Температура оновлена: ${temp} °C`);
+            addLog(`pH оновлено: ${ph}`);
+        }
+
+        // Оновлювати кожні 10 секунд
+        setInterval(updateSensorValues, 10000);
+        updateSensorValues(); // перше оновлення одразу
+    });
+</script>
+
     </script>
 </body>
 </html>
