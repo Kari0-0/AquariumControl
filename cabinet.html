@@ -98,6 +98,9 @@
       transform: scale(1.3);
       accent-color: #2a95b8;
     }
+    #mlWarnings ul li {
+      margin-bottom: 6px;
+    }
   </style>
 </head>
 <body>
@@ -154,10 +157,7 @@
       <div class="card">
         <h2>Рекомендації</h2>
         <div id="mlWarnings" class="hidden">
-          <ul>
-            <li>🔆 Рекомендовано вимкнути освітлення через очікуване зростання температури на +1.5°C</li>
-            <li>🌀 Виявлено аномалію: потрібно увімкнути фільтрацію</li>
-          </ul>
+          <ul id="mlList"></ul>
         </div>
       </div>
     </div>
@@ -198,7 +198,24 @@
 
     function toggleML() {
       const mlEnabled = document.getElementById('mlStatus').checked;
-      document.getElementById('mlWarnings').classList.toggle('hidden', !mlEnabled);
+      const mlBlock = document.getElementById('mlWarnings');
+      const mlList = document.getElementById('mlList');
+      mlBlock.classList.toggle('hidden', !mlEnabled);
+      if (mlEnabled) {
+        mlList.innerHTML = '';
+        const recommendations = [
+          '🔆 Рекомендовано вимкнути освітлення через очікуване зростання температури на +1.5°C',
+          '🌀 Виявлено аномалію: потрібно увімкнути фільтрацію',
+          '💧 Високий рівень випаровування — перевірте кришку акваріума',
+          '🌿 Рівень pH коливається — рекомендовано провести тестування води',
+          '🐠 Активність риб знизилась — перевірте температуру та кисень'
+        ];
+        recommendations.forEach(r => {
+          const li = document.createElement('li');
+          li.textContent = r;
+          mlList.appendChild(li);
+        });
+      }
     }
 
     function addAquarium() {
