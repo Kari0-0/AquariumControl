@@ -142,22 +142,11 @@
       </div>
     </div>
 
+    <!-- Інші розділи залишаються без змін -->
+
     <footer><p>AquariumControl, 2025 ©</p></footer>
   </main>
   <script>
-    function toggleTheme() { document.body.classList.toggle('dark'); }
-    function toggleLang() {
-      const lang = document.getElementById('welcome').textContent.includes('Вітаємо') ? 'en' : 'ua';
-      document.getElementById('welcome').textContent = lang==='ua'?'Welcome, User!':'Вітаємо, Користувачу!';
-      document.getElementById('overview').textContent = lang==='ua'?'Smart aquarium overview':'Огляд вашої системи розумного акваріума';
-    }
-
-    document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelectorAll('.dashboard').forEach(s=>s.classList.add('hidden'));
-      document.getElementById(btn.dataset.page).classList.remove('hidden');
-    }));
-
     new Chart(document.getElementById('analyticsTempChart'), {
       type: 'line',
       data: {
@@ -166,12 +155,10 @@
           label: 'Температура (°C)',
           data: [23.5, 24, 24.7, 25.2, 24.8],
           borderColor: '#f39c12',
-          fill: false,
           tension: 0.3
         }]
       }
     });
-
     new Chart(document.getElementById('analyticsPhChart'), {
       type: 'line',
       data: {
@@ -180,12 +167,10 @@
           label: 'pH',
           data: [7.2, 7.3, 7.1, 7.0, 7.2],
           borderColor: '#8e44ad',
-          fill: false,
           tension: 0.3
         }]
       }
     });
-
     new Chart(document.getElementById('analyticsFilterChart'), {
       type: 'line',
       data: {
@@ -194,7 +179,6 @@
           label: 'Фільтрація (%)',
           data: [80, 85, 90, 88, 92],
           borderColor: '#16a085',
-          fill: false,
           tension: 0.3
         }]
       }
