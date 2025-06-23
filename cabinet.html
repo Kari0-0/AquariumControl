@@ -220,17 +220,43 @@
    <div class="dashboard hidden" id="statsPage">
   <div class="card">
     <h2>Дані</h2>
-    <p><strong>Температура:</strong> для стабільності середовища риб та рослин.</p>
-    <p><strong>Світло:</strong> забезпечує біологічний ритм, розвиток водоростей і фотосинтез.</p>
-    <p><strong>Корм:</strong> регулярне і збалансоване живлення — основа здоров’я мешканців.</p>
-    <p><strong>Кисень:</strong> життєво необхідний для дихання і мікрофлори у фільтрі.</p>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1684/1684375.png" alt="temperature" width="40" height="40">
+      <div>
+        <p><strong>🌡️ Температура:</strong> забезпечує стабільність середовища для риб та рослин, впливає на обмін речовин і імунну систему. Оптимальний діапазон — 24–26°C для більшості тропічних видів.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="light" width="40" height="40">
+      <div>
+        <p><strong>💡 Світло:</strong> формує біоритм риб, підтримує ріст водоростей та рослин, сприяє створенню естетики. Рекомендована тривалість — 10–12 годин на добу.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/590/590685.png" alt="food" width="40" height="40">
+      <div>
+        <p><strong>🍽️ Корм:</strong> збалансоване харчування — основа активності та росту. Перегодовування шкодить, тому краще 2–3 рази на день у помірних порціях. Автоматичні годівниці зменшують ризики.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/7281/7281036.png" alt="oxygen" width="40" height="40">
+      <div>
+        <p><strong>💧 Кисень:</strong> життєво необхідний для дихання риб, бактерій у фільтрах, біорозкладу залишків. Забезпечується фільтрацією, аератором або водоспадом.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px;">
       <button style="background-color: #2a95b8; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ PNG</button>
       <button style="background-color: #3b8dbc; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ CSV</button>
       <button style="background-color: #217a99; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ JSON</button>
     </div>
   </div>
 </div>
+
 
     <!-- Analytics -->
     <div class="dashboard hidden" id="analyticsPage">
@@ -242,32 +268,57 @@
     </div>
 
     <!-- Settings -->
-   <div class="dashboard hidden" id="settingsPage">
+  <div class="dashboard hidden" id="settingsPage">
   <div class="card">
     <h2>Профіль</h2>
+
     <div class="toggle-group">
-      <label for="autofeed">Увімкнути автогодівлю</label>
+      <div>
+        <label for="autofeed"><strong>Увімкнути автогодівлю</strong></label>
+        <p style="font-size: 13px; color: gray;">Автоматичне годування риб за встановленим розкладом, зменшує людський фактор.</p>
+      </div>
       <label class="toggle-switch">
         <input id="autofeed" type="checkbox" checked>
         <span class="slider"></span>
       </label>
     </div>
+
     <div class="toggle-group">
-      <label for="notifications">Сповіщення</label>
+      <div>
+        <label for="notifications"><strong>Сповіщення</strong></label>
+        <p style="font-size: 13px; color: gray;">Отримуйте повідомлення про стан води, рівень корму або критичні події в системі.</p>
+      </div>
       <label class="toggle-switch">
         <input id="notifications" type="checkbox">
         <span class="slider"></span>
       </label>
     </div>
+
     <div class="toggle-group">
-      <label for="darktheme">Темна тема</label>
+      <div>
+        <label for="darktheme"><strong>Темна тема</strong></label>
+        <p style="font-size: 13px; color: gray;">Зменшує навантаження на очі у вечірній час або при низькому освітленні.</p>
+      </div>
       <label class="toggle-switch">
         <input id="darktheme" type="checkbox" onchange="toggleTheme()">
         <span class="slider"></span>
       </label>
     </div>
+
+    <div class="toggle-group">
+      <div>
+        <label for="soundalerts"><strong>Звукові сигнали</strong></label>
+        <p style="font-size: 13px; color: gray;">Увімкніть для отримання аудіо-повідомлень при зміні важливих параметрів.</p>
+      </div>
+      <label class="toggle-switch">
+        <input id="soundalerts" type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+
   </div>
 </div>
+
 
     <footer><p>AquariumControl, 2025 ©</p></footer>
   </main>
