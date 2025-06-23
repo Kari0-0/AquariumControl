@@ -240,28 +240,37 @@
     </div>
 
     <!-- My Aquariums -->
-    <div class="dashboard hidden" id="myAquariums">
-      <div class="card aquarium-card">
-        <h2>Акваріум №1</h2>
-        <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg" />
-        <p>Категорія: Прісноводний</p>
-        <div class="aquarium-actions">
-          <button onclick="editAquarium(this)">Редагувати</button>
-          <button onclick="deleteAquarium(this)">Видалити</button>
-        </div>
-      </div>
-      <div class="card">
-        <h2>+ Додати новий</h2>
-        <p>Форма для створення акваріума</p>
-        <input type="text" id="aquariumName" placeholder="Назва акваріума">
-        <select id="aquariumType">
-          <option value="Прісноводний">Прісноводний</option>
-          <option value="Солоноводний">Солоноводний</option>
-        </select>
-        <button onclick="addAquarium()">Додати</button>
-      </div>
+   <div class="dashboard hidden" id="myAquariums">
+  <div class="card aquarium-card">
+    <h2>Акваріум №1</h2>
+    <p><strong>Код пристрою:</strong> AQRX-001</p>
+    <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg" />
+    <p>Категорія: Прісноводний</p>
+    <div class="aquarium-actions">
+      <button onclick="editAquarium(this)">Редагувати</button>
+      <button onclick="deleteAquarium(this)">Видалити</button>
     </div>
+  </div>
 
+  <div class="card">
+    <h2>+ Додати новий</h2>
+    <p>Форма для створення акваріума</p>
+    <input type="text" id="aquariumName" placeholder="Назва акваріума">
+    <input type="text" id="aquariumVolume" placeholder="Обʼєм (л)">
+    <input type="text" id="aquariumLocation" placeholder="Розташування (наприклад, Кухня)">
+    <select id="aquariumType">
+      <option value="Прісноводний">Прісноводний</option>
+      <option value="Солоноводний">Солоноводний</option>
+    </select>
+    <select id="lighting">
+      <option value="Світлодіодне">Світлодіодне</option>
+      <option value="Люмінесцентне">Люмінесцентне</option>
+      <option value="Природне">Природне</option>
+    </select>
+    <input type="text" id="aquariumTemp" placeholder="Цільова температура (°C)">
+    <button onclick="addAquariumWithAutoCode()">Додати</button>
+  </div>
+</div>
     <!-- Statistics -->
 <div class="dashboard" id="statsPage">
   <div class="card">
@@ -463,6 +472,25 @@
       link.download = "aquarium_data.csv";
       link.click();
     }
+    function generateDeviceCode() {
+  const prefix = "AQRX-";
+  const randomNum = Math.floor(Math.random() * 900 + 100); // 3-значне число
+  return prefix + randomNum;
+}
+
+function addAquariumWithAutoCode() {
+  const name = document.getElementById('aquariumName').value;
+  const volume = document.getElementById('aquariumVolume').value;
+  const location = document.getElementById('aquariumLocation').value;
+  const type = document.getElementById('aquariumType').value;
+  const lighting = document.getElementById('lighting').value;
+  const temperature = document.getElementById('aquariumTemp').value;
+  const code = generateDeviceCode();
+
+  alert(`Акваріум "${name}" додано! Код пристрою: ${code}`);
+  // Тут можна додати вставку до DOM або відправку на сервер
+}
+
 
     function downloadJSON() {
       const blob = new Blob([JSON.stringify(aquariumData, null, 2)], { type: 'application/json' });
