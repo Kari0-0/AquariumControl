@@ -119,12 +119,15 @@
     }
     .toggle-group {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 5px;
       margin: 10px 0;
     }
-    .toggle-group input {
-      transform: scale(1.4);
+    .toggle-group input,
+    .toggle-group select {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
     #googleBanner {
       width: 100%;
@@ -145,7 +148,6 @@
       <a href="auth.html">Вийти</a>
     </nav>
   </aside>
-
   <main>
     <header>
       <div>
@@ -175,13 +177,19 @@
         <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg" />
         <p>Категорія: Прісноводний</p>
         <div class="aquarium-actions">
-          <button>Редагувати</button>
-          <button>Видалити</button>
+          <button onclick="editAquarium(this)">Редагувати</button>
+          <button onclick="deleteAquarium(this)">Видалити</button>
         </div>
       </div>
       <div class="card">
         <h2>+ Додати новий</h2>
         <p>Форма для створення акваріума</p>
+        <input type="text" id="aquariumName" placeholder="Назва акваріума">
+        <select id="aquariumType">
+          <option value="Прісноводний">Прісноводний</option>
+          <option value="Солоноводний">Солоноводний</option>
+        </select>
+        <button onclick="addAquarium()">Додати</button>
       </div>
     </div>
 
@@ -195,6 +203,8 @@
         <p>Кисень — життєдіяльність</p>
         <button onclick="downloadPNG()">⬇️ Завантажити PNG</button>
         <button onclick="downloadPDF()">⬇️ Завантажити PDF</button>
+        <button onclick="downloadCSV()">⬇️ Завантажити CSV</button>
+        <button onclick="downloadJSON()">⬇️ Завантажити JSON</button>
       </div>
     </div>
 
@@ -203,7 +213,7 @@
       <div class="card">
         <h2>Google Аналітика</h2>
         <img id="googleBanner" src="https://blog.google/static/blogv2/images/google-1000x600.jpg" alt="Google Analytics"/>
-        <p>Тут будуть виведені аналітичні графіки та звіти з Firebase/GA</p>
+        <canvas id="analyticsPie" width="300" height="300"></canvas>
       </div>
     </div>
 
@@ -223,7 +233,6 @@
   </main>
 
   <script>
-    // Графіки
     new Chart(document.getElementById('tempChart'), {
       type: 'line',
       data: {
@@ -251,12 +260,21 @@
       }
     });
 
-    // Тема
+    new Chart(document.getElementById('analyticsPie'), {
+      type: 'pie',
+      data: {
+        labels: ['Корм', 'Температура', 'Світло', 'Кисень', 'pH'],
+        datasets: [{
+          data: [20, 25, 15, 30, 10],
+          backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0', '#9966ff']
+        }]
+      }
+    });
+
     function toggleTheme() {
       document.body.classList.toggle('dark');
     }
 
-    // Мова
     let lang = 'ua';
     function toggleLang() {
       lang = lang === 'ua' ? 'en' : 'ua';
@@ -266,7 +284,6 @@
         lang === 'ua' ? 'Огляд вашої системи розумного акваріума' : 'Smart aquarium system overview';
     }
 
-    // Навігація
     document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.addEventListener('click', e => {
         e.preventDefault();
@@ -276,7 +293,14 @@
       });
     });
 
-    // Експорт PDF
+    const aquariumData = {
+      temperature: [24.1, 24.6, 25.0, 24.7, 24.3],
+      light: "12 годин/добу",
+      food: "3 рази/день",
+      oxygen: 6.8,
+      pH: 7.2
+    };
+
     function downloadPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
@@ -285,13 +309,68 @@
       doc.save("aquarium_report.pdf");
     }
 
-    // PNG з canvas
     function downloadPNG() {
       const canvas = document.getElementById('tempChart');
       const link = document.createElement('a');
       link.download = 'temperature_chart.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
+    }
+
+    function downloadCSV() {
+      const csv = [
+        "Параметр,Значення",
+        `Температура,${aquariumData.temperature.join('/')}`,
+        `Світло,${aquariumData.light}`,
+        `Корм,${aquariumData.food}`,
+        `Кисень,${aquariumData.oxygen}`,
+        `pH,${aquariumData.pH}`
+      ].join("\n");
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "aquarium_data.csv";
+      link.click();
+    }
+
+    function downloadJSON() {
+      const blob = new Blob([JSON.stringify(aquariumData, null, 2)], { type: 'application/json' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "aquarium_data.json";
+      link.click();
+    }
+
+    function addAquarium() {
+      const name = document.getElementById('aquariumName').value || `Акваріум №${Date.now()}`;
+      const type = document.getElementById('aquariumType').value;
+      const container = document.getElementById('myAquariums');
+      const card = document.createElement('div');
+      card.className = 'card aquarium-card';
+      card.innerHTML = `
+        <h2>${name}</h2>
+        <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg" />
+        <p>Категорія: ${type}</p>
+        <div class="aquarium-actions">
+          <button onclick="editAquarium(this)">Редагувати</button>
+          <button onclick="deleteAquarium(this)">Видалити</button>
+        </div>
+      `;
+      container.insertBefore(card, container.lastElementChild);
+    }
+
+    function deleteAquarium(btn) {
+      if (confirm("Видалити акваріум?")) {
+        btn.closest('.card').remove();
+      }
+    }
+
+    function editAquarium(btn) {
+      const card = btn.closest('.card');
+      const h2 = card.querySelector('h2');
+      const name = prompt("Нова назва акваріума:", h2.textContent);
+      if (name) h2.textContent = name;
     }
   </script>
 </body>
