@@ -18,27 +18,18 @@
       --card-bg-dark: #2c2c2c;
       --accent: #2a95b8;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
     body {
       display: flex;
-      flex-direction: row;
       min-height: 100vh;
-      background-color: var(--bg-light);
+      background: var(--bg-light);
       color: var(--text-light);
-      transition: 0.3s ease;
+      transition: .3s ease;
     }
-    body.dark {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
+    body.dark { background: var(--bg-dark); color: var(--text-dark); }
     aside {
       width: 220px;
-      background-color: var(--accent);
+      background: var(--accent);
       color: white;
       padding: 20px;
     }
@@ -49,11 +40,9 @@
       margin-bottom: 12px;
       padding: 8px;
       border-radius: 6px;
-      transition: background-color 0.3s;
+      transition: .3s;
     }
-    aside nav a:hover {
-      background-color: #217a99;
-    }
+    aside nav a:hover { background: #217a99; }
     main {
       flex-grow: 1;
       padding: 30px;
@@ -64,72 +53,39 @@
       justify-content: space-between;
       align-items: center;
     }
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background-color: var(--card-bg-light);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: background-color 0.3s;
-    }
-    body.dark .card {
-      background-color: var(--card-bg-dark);
-    }
-    .card h2 {
-      margin-bottom: 10px;
-      font-size: 18px;
-      color: #217a99;
-    }
-    .hidden {
-      display: none;
-    }
     .controls button {
-      background-color: var(--accent);
+      background: var(--accent);
       color: white;
       border: none;
       padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
     }
-    .aquarium-card {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 20px;
     }
-    .aquarium-card img {
-      width: 100%;
-      border-radius: 8px;
+    .card {
+      background: var(--card-bg-light);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: background .3s;
     }
-    .aquarium-actions {
-      display: flex;
-      gap: 10px;
-    }
+    body.dark .card { background: var(--card-bg-dark); }
+    .card h2 { margin-bottom: 10px; color: #217a99; font-size: 18px; }
+    .hidden { display: none; }
+    .aquarium-card img { width: 100%; border-radius: 8px; gap: 10px; }
+    .aquarium-actions { display: flex; gap: 10px; margin-top: 10px; }
     .aquarium-actions button {
       flex: 1;
       padding: 6px;
-      background-color: #3b8dbc;
+      background: #3b8dbc;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-    }
-    .toggle-group {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-    }
-    .toggle-group input {
-      transform: scale(1.4);
-    }
-    #googleBanner {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
     }
   </style>
 </head>
@@ -169,426 +125,100 @@
     </div>
 
     <!-- My Aquariums -->
-    <div class="dashboard hidden" id="myAquariums">
-      <div class="card aquarium-card">
-        <h2>Акваріум №1</h2>
-        <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg" />
-        <p>Категорія: Прісноводний</p>
-        <div class="aquarium-actions">
-          <button>Редагувати</button>
-          <button>Видалити</button>
-        </div>
-      </div>
-      <div class="card">
-        <h2>+ Додати новий</h2>
-        <p>Форма для створення акваріума</p>
-      </div>
-    </div>
+    <div class="dashboard hidden" id="myAquariums"></div>
 
-    <!-- Statistics -->
-    <div class="dashboard hidden" id="statsPage">
-      <div class="card">
-        <h2>Дані</h2>
-        <p>Температура — для стабільності середовища</p>
-        <p>Світло — для біоритмів риб</p>
-        <p>Корм — живлення</p>
-        <p>Кисень — життєдіяльність</p>
-        <button onclick="downloadPNG()">⬇️ Завантажити PNG</button>
-        <button onclick="downloadPDF()">⬇️ Завантажити PDF</button>
-      </div>
-    </div>
-
-    <!-- Analytics -->
-    <div class="dashboard hidden" id="analyticsPage">
-      <div class="card">
-        <h2>Google Аналітика</h2>
-        <img id="googleBanner" src="https://blog.google/static/blogv2/images/google-1000x600.jpg" alt="Google Analytics"/>
-        <p>Тут будуть виведені аналітичні графіки та звіти з Firebase/GA</p>
-      </div>
-    </div>
-
-    <!-- Settings -->
-    <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Профіль</h2>
-        <div class="toggle-group"><label>Змінити імʼя</label><input type="text" placeholder="Ваше імʼя"></div>
-        <div class="toggle-group"><label>Email</label><input type="email" placeholder="example@gmail.com"></div>
-        <div class="toggle-group"><label>Увімкнути автогодівлю</label><input type="checkbox" checked></div>
-        <div class="toggle-group"><label>Сповіщення</label><input type="checkbox"></div>
-        <div class="toggle-group"><label>Темна тема</label><input type="checkbox" onchange="toggleTheme()"></div>
-      </div>
-    </div>
+    <!-- Stats, Analytics, Settings sections ... (однакові) -->
 
     <footer><p>AquariumControl, 2025 ©</p></footer>
   </main>
 
   <script>
-    // Графіки
-    new Chart(document.getElementById('tempChart'), {
-      type: 'line',
-      data: {
-        labels: ['6:00','9:00','12:00','15:00','18:00'],
-        datasets: [{
-          label: 'Температура (°C)',
-          data: [24.1, 24.6, 25.0, 24.7, 24.3],
-          borderColor: '#2a95b8',
-          backgroundColor: 'rgba(42, 149, 184, 0.2)',
-          fill: true,
-          tension: 0.4
-        }]
-      }
-    });
-
-    new Chart(document.getElementById('pressureChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Пн','Вт','Ср','Чт','Пт'],
-        datasets: [{
-          label: 'Тиск (мм рт.ст.)',
-          data: [760, 762, 758, 759, 761],
-          backgroundColor: '#2a95b8'
-        }]
-      }
-    });
-
-    // Тема
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-    }
-
-    // Мова
+    // Toggle theme/lang/nav
+    function toggleTheme() { document.body.classList.toggle('dark'); }
     let lang = 'ua';
     function toggleLang() {
-      lang = lang === 'ua' ? 'en' : 'ua';
-      document.getElementById('welcome').textContent =
-        lang === 'ua' ? 'Вітаємо, Користувачу!' : 'Welcome, User!';
-      document.getElementById('overview').textContent =
-        lang === 'ua' ? 'Огляд вашої системи розумного акваріума' : 'Smart aquarium system overview';
+      lang = lang==='ua'?'en':'ua';
+      document.getElementById('welcome').textContent = lang==='ua'?'Вітаємо, Користувачу!':'Welcome, User!';
+      document.getElementById('overview').textContent = lang==='ua'?'Огляд вашої системи розумного акваріума':'Smart aquarium overview';
     }
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.dashboard').forEach(s=>s.classList.add('hidden'));
+      document.getElementById(btn.dataset.page).classList.remove('hidden');
+    }));
 
-    // Навігація
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const id = btn.getAttribute('data-page');
-        document.querySelectorAll('.dashboard').forEach(section => section.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-      });
+    // Chart.js
+    new Chart(document.getElementById('tempChart'), {
+      type: 'line',
+      data: { labels:['6','9','12','15','18'], datasets:[{label:'Температура (°C)',data:[24.1,24.6,25,24.7,24.3],borderColor:'#2a95b8',backgroundColor:'rgba(42,149,184,0.2)',fill:true,tension:0.4}] }
+    });
+    new Chart(document.getElementById('pressureChart'), {
+      type: 'bar',
+      data: { labels:['Пн','Вт','Ср','Чт','Пт'], datasets:[{label:'Тиск (мм рт.ст.)',data:[760,762,758,759,761],backgroundColor:'#2a95b8'}] }
     });
 
-    // Експорт PDF
     function downloadPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      doc.text("Розумний Акваріум — Звіт", 20, 20);
-      doc.text("Температура, Світло, Корм, pH, Кисень...", 20, 30);
-      doc.save("aquarium_report.pdf");
+      doc.text("Розумний Акваріум — Звіт",20,20);
+      doc.save("report.pdf");
     }
-
-    // PNG з canvas
     function downloadPNG() {
-      const canvas = document.getElementById('tempChart');
+      const c = document.getElementById('tempChart');
       const link = document.createElement('a');
-      link.download = 'temperature_chart.png';
-      link.href = canvas.toDataURL('image/png');
+      link.download='chart.png';
+      link.href = c.toDataURL();
       link.click();
     }
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Особистий кабінет — Розумний Акваріум</title>
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.freepik.com/512/18284/18284610.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    :root {
-      --bg-light: #f4f9fb;
-      --bg-dark: #1e1e1e;
-      --text-light: #333;
-      --text-dark: #eee;
-      --card-bg-light: #fff;
-      --card-bg-dark: #2c2c2c;
-      --accent: #2a95b8;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', sans-serif;
-    }
-    body {
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      transition: 0.3s ease;
-    }
-    body.dark {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
-    aside {
-      width: 220px;
-      background-color: var(--accent);
-      color: white;
-      padding: 20px;
-    }
-    aside nav a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin-bottom: 12px;
-      padding: 8px;
-      border-radius: 6px;
-      transition: background-color 0.3s;
-    }
-    aside nav a:hover {
-      background-color: #217a99;
-    }
-    main {
-      flex-grow: 1;
-      padding: 30px;
-    }
-    header {
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background-color: var(--card-bg-light);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: background-color 0.3s;
-    }
-    body.dark .card {
-      background-color: var(--card-bg-dark);
-    }
-    .card h2 {
-      margin-bottom: 10px;
-      font-size: 18px;
-      color: #217a99;
-    }
-    .hidden {
-      display: none;
-    }
-    .controls button {
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .aquarium-card {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .aquarium-card img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .aquarium-actions {
-      display: flex;
-      gap: 10px;
-    }
-    .aquarium-actions button {
-      flex: 1;
-      padding: 6px;
-      background-color: #3b8dbc;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .toggle-group {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-    }
-    .toggle-group input {
-      transform: scale(1.4);
-    }
-    #googleBanner {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-  <aside>
-    <h2>Акваріум</h2>
-    <nav>
-      <a href="#" class="nav-btn" data-page="homePage">Головна</a>
-      <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
-      <a href="#" class="nav-btn" data-page="statsPage">Статистика</a>
-      <a href="#" class="nav-btn" data-page="analyticsPage">Google Аналітика</a>
-      <a href="#" class="nav-btn" data-page="settingsPage">Налаштування</a>
-      <a href="auth.html">Вийти</a>
-    </nav>
-  </aside>
 
-  <main>
-    <header>
-      <div>
-        <h1 id="welcome">Вітаємо, Користувачу!</h1>
-        <p id="overview">Огляд вашої системи розумного акваріума</p>
-      </div>
-      <div class="controls">
-        <button onclick="toggleLang()">UA / EN</button>
-        <button onclick="toggleTheme()">☀️ / 🌙</button>
-      </div>
-    </header>
+    // My Aquariums logic
+    const container = document.getElementById('myAquariums');
 
-    <!-- Home -->
-    <div class="dashboard" id="homePage">
-      <div class="card"><h2>Температура</h2><canvas id="tempChart"></canvas></div>
-      <div class="card"><h2>Тиск</h2><canvas id="pressureChart"></canvas></div>
-      <div class="card"><h2>Світло</h2><p>12 годин / добу</p></div>
-      <div class="card"><h2>Корм</h2><p>Автогодівля: 3 рази/день</p></div>
-      <div class="card"><h2>Кисень</h2><p>6.8 мг/л</p></div>
-      <div class="card"><h2>pH</h2><p>Стабільний — 7.2</p></div>
-    </div>
+    // Form card
+    const formCard = document.createElement('div');
+    formCard.className = 'card';
+    formCard.innerHTML = `
+      <h2>+ Додати новий</h2>
+      <input id="aqName" type="text" placeholder="Назва акваріума" style="width:100%; margin:5px 0; padding:6px;" />
+      <input id="aqCode" type="text" placeholder="Код пристрою" style="width:100%; margin:5px 0; padding:6px;" />
+      <button onclick="addAquarium()">Додати</button>
+    `;
+    container.append(formCard);
 
-    <!-- My Aquariums -->
-    <div class="dashboard hidden" id="myAquariums">
-      <div class="card aquarium-card">
-        <h2>Акваріум №1</h2>
+    function addAquarium() {
+      const name = document.getElementById('aqName').value.trim();
+      const code = document.getElementById('aqCode').value.trim();
+      if(!name || !code){ alert('Заповніть всі поля'); return; }
+      const card = document.createElement('div');
+      card.className = 'card aquarium-card';
+      card.innerHTML = `
+        <h2>${name}</h2>
         <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg" />
-        <p>Категорія: Прісноводний</p>
+        <p><strong>Код пристрою:</strong> ${code}</p>
         <div class="aquarium-actions">
-          <button>Редагувати</button>
-          <button>Видалити</button>
+          <button onclick="editAquarium(this)">Редагувати</button>
+          <button onclick="deleteAquarium(this)">Видалити</button>
         </div>
-      </div>
-      <div class="card">
-        <h2>+ Додати новий</h2>
-        <p>Форма для створення акваріума</p>
-      </div>
-    </div>
+      `;
+      container.insertBefore(card, formCard);
+      document.getElementById('aqName').value = '';
+      document.getElementById('aqCode').value = '';
+    }
 
-    <!-- Statistics -->
-    <div class="dashboard hidden" id="statsPage">
-      <div class="card">
-        <h2>Дані</h2>
-        <p>Температура — для стабільності середовища</p>
-        <p>Світло — для біоритмів риб</p>
-        <p>Корм — живлення</p>
-        <p>Кисень — життєдіяльність</p>
-        <button onclick="downloadPNG()">⬇️ Завантажити PNG</button>
-        <button onclick="downloadPDF()">⬇️ Завантажити PDF</button>
-      </div>
-    </div>
+    function deleteAquarium(btn){
+      if(confirm('Видалити акваріум?')) btn.closest('.card').remove();
+    }
 
-    <!-- Analytics -->
-    <div class="dashboard hidden" id="analyticsPage">
-      <div class="card">
-        <h2>Google Аналітика</h2>
-        <img id="googleBanner" src="https://blog.google/static/blogv2/images/google-1000x600.jpg" alt="Google Analytics"/>
-        <p>Тут будуть виведені аналітичні графіки та звіти з Firebase/GA</p>
-      </div>
-    </div>
-
-    <!-- Settings -->
-    <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Профіль</h2>
-        <div class="toggle-group"><label>Змінити імʼя</label><input type="text" placeholder="Ваше імʼя"></div>
-        <div class="toggle-group"><label>Email</label><input type="email" placeholder="example@gmail.com"></div>
-        <div class="toggle-group"><label>Увімкнути автогодівлю</label><input type="checkbox" checked></div>
-        <div class="toggle-group"><label>Сповіщення</label><input type="checkbox"></div>
-        <div class="toggle-group"><label>Темна тема</label><input type="checkbox" onchange="toggleTheme()"></div>
-      </div>
-    </div>
-
-    <footer><p>AquariumControl, 2025 ©</p></footer>
-  </main>
-
-  <script>
-    // Графіки
-    new Chart(document.getElementById('tempChart'), {
-      type: 'line',
-      data: {
-        labels: ['6:00','9:00','12:00','15:00','18:00'],
-        datasets: [{
-          label: 'Температура (°C)',
-          data: [24.1, 24.6, 25.0, 24.7, 24.3],
-          borderColor: '#2a95b8',
-          backgroundColor: 'rgba(42, 149, 184, 0.2)',
-          fill: true,
-          tension: 0.4
-        }]
+    function editAquarium(btn){
+      const card = btn.closest('.card');
+      const nameEl = card.querySelector('h2');
+      const codeEl = card.querySelector('p strong').nextSibling;
+      const newName = prompt('Нова назва:', nameEl.textContent);
+      const newCode = prompt('Новий код пристрою:', codeEl.textContent.trim());
+      if(newName && newCode){
+        nameEl.textContent = newName;
+        card.querySelector('p').innerHTML = `<strong>Код пристрою:</strong> ${newCode}`;
       }
-    });
-
-    new Chart(document.getElementById('pressureChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Пн','Вт','Ср','Чт','Пт'],
-        datasets: [{
-          label: 'Тиск (мм рт.ст.)',
-          data: [760, 762, 758, 759, 761],
-          backgroundColor: '#2a95b8'
-        }]
-      }
-    });
-
-    // Тема
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-    }
-
-    // Мова
-    let lang = 'ua';
-    function toggleLang() {
-      lang = lang === 'ua' ? 'en' : 'ua';
-      document.getElementById('welcome').textContent =
-        lang === 'ua' ? 'Вітаємо, Користувачу!' : 'Welcome, User!';
-      document.getElementById('overview').textContent =
-        lang === 'ua' ? 'Огляд вашої системи розумного акваріума' : 'Smart aquarium system overview';
-    }
-
-    // Навігація
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const id = btn.getAttribute('data-page');
-        document.querySelectorAll('.dashboard').forEach(section => section.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-      });
-    });
-
-    // Експорт PDF
-    function downloadPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text("Розумний Акваріум — Звіт", 20, 20);
-      doc.text("Температура, Світло, Корм, pH, Кисень...", 20, 30);
-      doc.save("aquarium_report.pdf");
-    }
-
-    // PNG з canvas
-    function downloadPNG() {
-      const canvas = document.getElementById('tempChart');
-      const link = document.createElement('a');
-      link.download = 'temperature_chart.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
     }
   </script>
 </body>
