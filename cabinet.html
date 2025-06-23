@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Особистий кабінет — Розумний Акваріум</title>
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.freepik.com/512/18284/18284610.png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
       --bg-light: #f4f9fb;
@@ -18,23 +16,12 @@
       --card-bg-dark: #2c2c2c;
       --accent: #2a95b8;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', sans-serif;
-    }
     body {
       display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-      background-color: var(--bg-light);
+      background: var(--bg-light);
+      font-family: 'Montserrat', sans-serif;
       color: var(--text-light);
-      transition: 0.3s ease;
-    }
-    body.dark {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
+      margin: 0;
     }
     aside {
       width: 220px;
@@ -42,51 +29,19 @@
       color: white;
       padding: 20px;
     }
-    aside nav a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin-bottom: 12px;
-      padding: 8px;
-      border-radius: 6px;
-      transition: background-color 0.3s;
-    }
-    aside nav a:hover {
-      background-color: #217a99;
-    }
     main {
       flex-grow: 1;
       padding: 30px;
     }
-    header {
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
+    .dashboard { display: none; }
+    .dashboard.active { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
     .card {
-      background-color: var(--card-bg-light);
-      border-radius: 12px;
+      background: var(--card-bg-light);
       padding: 20px;
+      border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: background-color 0.3s;
     }
-    body.dark .card {
-      background-color: var(--card-bg-dark);
-    }
-    .card h2 {
-      margin-bottom: 10px;
-      font-size: 18px;
-      color: #217a99;
-    }
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
     .controls button {
       background-color: var(--accent);
       color: white;
@@ -95,176 +50,103 @@
       border-radius: 6px;
       cursor: pointer;
     }
+    .aquarium-card input,
+    .aquarium-card select {
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px;
+    }
+    .recommendation {
+      background: #fff8e1;
+      padding: 10px;
+      border-left: 4px solid #ff9800;
+      border-radius: 8px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <aside>
-    <h2>Акваріум</h2>
-    <br>
+    <h2>Меню</h2>
     <nav>
-      <a href="#" class="nav-btn" data-page="homePage">Головна</a>
-      <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
-      <a href="#" class="nav-btn" data-page="statsPage">Статистика</a>
-      <a href="#" class="nav-btn" data-page="analyticsPage">Аналітика</a>
-      <a href="#" class="nav-btn" data-page="settingsPage">Налаштування</a>
-      <a href="auth.html">Вийти</a>
+      <a href="#" class="nav-btn" data-page="home">Головна</a>
+      <a href="#" class="nav-btn" data-page="aquariums">Мої акваріуми</a>
+      <a href="#" class="nav-btn" data-page="stats">Статистика</a>
+      <a href="#" class="nav-btn" data-page="settings">Налаштування</a>
     </nav>
   </aside>
   <main>
     <header>
-      <div>
-        <h1 id="welcome">Вітаємо, Користувачу!</h1>
-        <p id="overview">Огляд вашої системи розумного акваріума</p>
-      </div>
-      <div class="controls">
-        <button onclick="toggleLang()">UA / EN</button>
-        <button onclick="toggleTheme()">☀️ / 🌙</button>
-      </div>
+      <h1 id="welcome">Вітаємо!</h1>
     </header>
 
-    <div class="dashboard" id="homePage">
-      <div class="card"><h2>Температура</h2><canvas id="tempChart"></canvas></div>
-      <div class="card"><h2>Тиск</h2><canvas id="pressureChart"></canvas></div>
+    <div class="dashboard active" id="home">
+      <div class="card">
+        <h2>Огляд параметрів</h2>
+        <ul>
+          <li>Температура: 25.1°C</li>
+          <li>pH: 7.3</li>
+          <li>Вода: присна</li>
+          <li>Фільтрація: увімкнена</li>
+          <li>Кисень: 6.7 мг/л</li>
+          <li>Світло: 10 год/добу</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="dashboard hidden" id="myAquariums">
+    <div class="dashboard" id="aquariums">
       <div class="card aquarium-card">
-        <h2>Акваріум №1</h2>
-        <p><strong>Код пристрою:</strong> AQRX-001</p>
-        <img src="https://blog.tetra.net/ru/ru/wp-content/uploads/2021/03/chtoby-sdelat-krasivyj-akvarium-nado-sledovat-neskolkim-pravilam.jpg" />
-        <p>Категорія: Прісноводний</p>
-        <div class="aquarium-actions">
-          <button onclick="editAquarium(this)">Редагувати</button>
-          <button onclick="deleteAquarium(this)">Видалити</button>
+        <h2>Редагувати Акваріум</h2>
+        <input type="text" placeholder="Назва">
+        <input type="text" placeholder="Об'єм (л)">
+        <input type="text" placeholder="Розташування">
+        <select>
+          <option>Прісноводний</option>
+          <option>Солоноводний</option>
+        </select>
+        <input type="text" placeholder="Цільова температура">
+        <button>Оновити</button>
+        <button>Видалити</button>
+      </div>
+    </div>
+
+    <div class="dashboard" id="stats">
+      <div class="card">
+        <h2>Статистика за добу</h2>
+        <canvas id="statsChart"></canvas>
+      </div>
+    </div>
+
+    <div class="dashboard" id="settings">
+      <div class="card">
+        <h2>Рекомендації</h2>
+        <div class="recommendation">
+          Рекомендовано вимкнути освітлення через очікуване зростання температури на +1.5°C
         </div>
       </div>
     </div>
-
-    <div class="dashboard hidden" id="statsPage">
-      <div class="card">
-        <h2>Статистика</h2>
-        <canvas id="aquariumStatsChart" style="width:100%; max-height: 300px;"></canvas>
-      </div>
-    </div>
-
-    <div class="dashboard hidden" id="analyticsPage">
-      <div class="card">
-        <h2>Google Аналітика</h2>
-        <canvas id="analyticsPie" width="300" height="300"></canvas>
-      </div>
-    </div>
-
-    <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Налаштування</h2>
-        <label><input type="checkbox" id="darktheme" onchange="toggleTheme()"> Темна тема</label>
-      </div>
-    </div>
-
-    <footer><p>AquariumControl, 2025 ©</p></footer>
   </main>
 
   <script>
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-    }
-
-    let lang = 'ua';
-    function toggleLang() {
-      lang = lang === 'ua' ? 'en' : 'ua';
-      document.getElementById('welcome').textContent =
-        lang === 'ua' ? 'Вітаємо, Користувачу!' : 'Welcome, User!';
-      document.getElementById('overview').textContent =
-        lang === 'ua' ? 'Огляд вашої системи розумного акваріума' : 'Smart aquarium system overview';
-    }
-
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const sections = ['homePage', 'myAquariums', 'statsPage', 'analyticsPage', 'settingsPage'];
-
-    navButtons.forEach(btn => {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.addEventListener('click', e => {
         e.preventDefault();
-        const targetPage = btn.getAttribute('data-page');
-
-        sections.forEach(sectionId => {
-          const section = document.getElementById(sectionId);
-          if (section) {
-            section.classList.toggle('hidden', sectionId !== targetPage);
-          }
-        });
+        const target = btn.dataset.page;
+        document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
       });
     });
 
-    new Chart(document.getElementById('tempChart'), {
+    new Chart(document.getElementById('statsChart'), {
       type: 'line',
       data: {
         labels: ['6:00','9:00','12:00','15:00','18:00'],
         datasets: [{
-          label: 'Температура (°C)',
-          data: [24.1, 24.6, 25.0, 24.7, 24.3],
+          label: 'Температура',
+          data: [24.5, 25.0, 25.3, 25.5, 25.1],
           borderColor: '#2a95b8',
-          backgroundColor: 'rgba(42, 149, 184, 0.2)',
-          fill: true,
-          tension: 0.4
+          fill: false
         }]
-      }
-    });
-
-    new Chart(document.getElementById('pressureChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Пн','Вт','Ср','Чт','Пт'],
-        datasets: [{
-          label: 'Тиск (мм рт.ст.)',
-          data: [760, 762, 758, 759, 761],
-          backgroundColor: '#2a95b8'
-        }]
-      }
-    });
-
-    new Chart(document.getElementById('analyticsPie'), {
-      type: 'pie',
-      data: {
-        labels: ['Київ', 'Дніпро', 'Харків', 'Житомир', 'Львів'],
-        datasets: [{
-          data: [20, 25, 15, 30, 10],
-          backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0', '#9966ff']
-        }]
-      }
-    });
-
-    const ctx = document.getElementById('aquariumStatsChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['6:00','9:00','12:00','15:00','18:00'],
-        datasets: [
-          {
-            label: 'Температура (°C)',
-            data: [24.3, 24.6, 25.0, 24.8, 24.6],
-            borderColor: '#2a95b8',
-            fill: false
-          },
-          {
-            label: 'pH',
-            data: [7.0, 7.1, 7.2, 7.2, 7.1],
-            borderColor: '#8e44ad',
-            fill: false
-          },
-          {
-            label: 'Вологість ґрунту',
-            data: [520, 525, 528, 530, 526],
-            borderColor: '#27ae60',
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: 'top' },
-          title: { display: true, text: 'Динаміка показників за добу' }
-        }
       }
     });
   </script>
