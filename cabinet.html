@@ -217,19 +217,20 @@
     </div>
 
     <!-- Statistics -->
-    <div class="dashboard hidden" id="statsPage">
-      <div class="card">
-        <h2>Дані</h2>
-        <p>Температура — для стабільності середовища</p>
-        <p>Світло — для біоритмів риб</p>
-        <p>Корм — живлення</p>
-        <p>Кисень — життєдіяльність</p>
-        <button onclick="downloadPNG()">⬇️ Завантажити PNG</button>
-
-        <button onclick="downloadCSV()">⬇️ Завантажити CSV</button>
-        <button onclick="downloadJSON()">⬇️ Завантажити JSON</button>
-      </div>
+   <div class="dashboard hidden" id="statsPage">
+  <div class="card">
+    <h2>Дані</h2>
+    <p><strong>Температура:</strong> для стабільності середовища риб та рослин.</p>
+    <p><strong>Світло:</strong> забезпечує біологічний ритм, розвиток водоростей і фотосинтез.</p>
+    <p><strong>Корм:</strong> регулярне і збалансоване живлення — основа здоров’я мешканців.</p>
+    <p><strong>Кисень:</strong> життєво необхідний для дихання і мікрофлори у фільтрі.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+      <button style="background-color: #2a95b8; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ PNG</button>
+      <button style="background-color: #3b8dbc; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ CSV</button>
+      <button style="background-color: #217a99; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ JSON</button>
     </div>
+  </div>
+</div>
 
     <!-- Analytics -->
     <div class="dashboard hidden" id="analyticsPage">
@@ -241,14 +242,32 @@
     </div>
 
     <!-- Settings -->
-    <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Профіль</h2>
-        <div class="toggle-group"><label>Увімкнути автогодівлю</label><input type="checkbox" checked></div>
-        <div class="toggle-group"><label>Сповіщення</label><input type="checkbox"></div>
-        <div class="toggle-group"><label>Темна тема</label><input type="checkbox" onchange="toggleTheme()"></div>
-      </div>
+   <div class="dashboard hidden" id="settingsPage">
+  <div class="card">
+    <h2>Профіль</h2>
+    <div class="toggle-group">
+      <label for="autofeed">Увімкнути автогодівлю</label>
+      <label class="toggle-switch">
+        <input id="autofeed" type="checkbox" checked>
+        <span class="slider"></span>
+      </label>
     </div>
+    <div class="toggle-group">
+      <label for="notifications">Сповіщення</label>
+      <label class="toggle-switch">
+        <input id="notifications" type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="toggle-group">
+      <label for="darktheme">Темна тема</label>
+      <label class="toggle-switch">
+        <input id="darktheme" type="checkbox" onchange="toggleTheme()">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+</div>
 
     <footer><p>AquariumControl, 2025 ©</p></footer>
   </main>
