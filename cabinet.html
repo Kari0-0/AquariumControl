@@ -107,6 +107,53 @@
       font-size: 18px;
       color: #217a99;
     }
+     .toggle-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+  }
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  .toggle-switch input:checked + .slider {
+    background-color: #2a95b8;
+  }
+  .toggle-switch input:checked + .slider:before {
+    transform: translateX(24px);
+  }
     .hidden {
       display: none;
     }
@@ -217,7 +264,8 @@
     </div>
 
     <!-- Statistics -->
-   <div class="dashboard hidden" id="statsPage">
+ 
+<div class="dashboard hidden" id="statsPage">
   <div class="card">
     <h2>Дані</h2>
 
@@ -245,14 +293,14 @@
     <div style="display: flex; align-items: center; gap: 15px;">
       <img src="https://cdn-icons-png.flaticon.com/512/7281/7281036.png" alt="oxygen" width="40" height="40">
       <div>
-        <p><strong>💧 Кисень:</strong> життєво необхідний для дихання риб, бактерій у фільтрах, біорозкладу залишків. Забезпечується фільтрацією, аератором або водоспадом.</p>
+        <p><strong>💧 Кисень:</strong> життєво необхідний для дихання риб, бактерій у фільтрах, біорозкладу залишків. Забезпечується фільтрацією, аератором або водоспадом. Також рівень кисню впливає на ріст рослин і активність мешканців.</p>
       </div>
     </div>
 
     <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px;">
-      <button style="background-color: #2a95b8; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ PNG</button>
-      <button style="background-color: #3b8dbc; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ CSV</button>
-      <button style="background-color: #217a99; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ JSON</button>
+      <button onclick="downloadPNG()" style="background-color: #2a95b8; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ PNG</button>
+      <button onclick="downloadCSV()" style="background-color: #3b8dbc; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ CSV</button>
+      <button onclick="downloadJSON()" style="background-color: #217a99; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">⬇️ JSON</button>
     </div>
   </div>
 </div>
@@ -268,7 +316,7 @@
     </div>
 
     <!-- Settings -->
-  <div class="dashboard hidden" id="settingsPage">
+ <div class="dashboard hidden" id="settingsPage">
   <div class="card">
     <h2>Профіль</h2>
 
@@ -318,6 +366,7 @@
 
   </div>
 </div>
+
 
 
     <footer><p>AquariumControl, 2025 ©</p></footer>
