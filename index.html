@@ -6,6 +6,12 @@
     <title>Розумний Акваріум - Головна</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <style>
+.active-button {
+    background-color: #4CAF50; /* зелений або будь-який бажаний */
+    color: white;
+}
+</style>
 </head>
 <body>
     <div class="container">
@@ -71,6 +77,61 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js">
+
+// script.js
+
+document.addEventListener('DOMContentLoaded', function () {
+    const feedButton = document.getElementById('feedButton');
+    const lightButton = document.getElementById('lightButton');
+    const filterButton = document.getElementById('filterButton');
+    const aerationButton = document.getElementById('aerationButton');
+    const logList = document.getElementById('logList');
+
+    // Стан для кожної кнопки
+    let lightOn = false;
+    let filterOn = false;
+    let aerationOn = false;
+
+    function addLog(message) {
+        const li = document.createElement('li');
+        li.textContent = `${new Date().toLocaleString()} - ${message}`;
+        logList.prepend(li);
+    }
+
+    function toggleButton(button, isOn) {
+        if (isOn) {
+            button.classList.add('active-button');
+        } else {
+            button.classList.remove('active-button');
+        }
+    }
+
+    feedButton.addEventListener('click', () => {
+        addLog('Годування риб активовано.');
+        feedButton.classList.add('active-button');
+        setTimeout(() => feedButton.classList.remove('active-button'), 500); // на мить зміна кольору
+    });
+
+    lightButton.addEventListener('click', () => {
+        lightOn = !lightOn;
+        toggleButton(lightButton, lightOn);
+        addLog(lightOn ? 'Освітлення увімкнено.' : 'Освітлення вимкнено.');
+    });
+
+    filterButton.addEventListener('click', () => {
+        filterOn = !filterOn;
+        toggleButton(filterButton, filterOn);
+        addLog(filterOn ? 'Фільтрацію увімкнено.' : 'Фільтрацію вимкнено.');
+    });
+
+    aerationButton.addEventListener('click', () => {
+        aerationOn = !aerationOn;
+        toggleButton(aerationButton, aerationOn);
+        addLog(aerationOn ? 'Аерацію увімкнено.' : 'Аерацію вимкнено.');
+    });
+});
+
+</script>
 </body>
 </html> 
