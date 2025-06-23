@@ -5,92 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Розумний Акваріум - Головна</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f9fb;
-            color: #333;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-        .main-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .header-image {
-            width: 100%;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        .header-content {
-            padding: 20px 0;
-        }
-        .main-nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .main-nav a {
-            text-decoration: none;
-            padding: 10px 15px;
-            background-color: #2a95b8;
-            color: white;
-            border-radius: 5px;
-        }
-        .main-nav a.active {
-            background-color: #217a99;
-        }
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        .card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-        .controls button {
-            padding: 10px 14px;
-            background-color: #2a95b8;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .controls button:hover {
-            background-color: #217a99;
-        }
-        button.disabled-indicator {
-            background-color: #ccc;
-            cursor: default;
-            pointer-events: none;
-            opacity: 0.6;
-        }
-        .log-section ul {
-            list-style: disc;
-            padding-left: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -103,6 +18,7 @@
             </div>
         </header>
 
+        <!-- 🔁 Повернуто меню -->
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html" class="active">Головна</a></li>
@@ -141,11 +57,8 @@
             <div class="controls">
                 <button id="feedButton">Погодувати риб</button>
                 <button id="lightButton">Увімк/вимкн освітлення</button>
-                <button id="filterButton">Увімк фільтрацію</button>
+                <button id="filterButton">Увімк/вимкн фільтрацію</button>
                 <button id="aerationButton">Увімк/вимкн аерацію</button>
-
-                <button class="disabled-indicator" id="oxygenDisplay">Кисень: -- мг/л</button>
-                <button class="disabled-indicator" id="salinityDisplay">Солоність: -- ‰</button>
             </div>
 
             <div class="log-section">
@@ -153,22 +66,11 @@
                 <ul id="logList">
                     <li>Лог завантажується...</li>
                 </ul>
+             
             </div>
         </main>
     </div>
 
-    <script>
-        let filterOn = false;
-
-        document.getElementById('filterButton').addEventListener('click', () => {
-            filterOn = !filterOn;
-            const btn = document.getElementById('filterButton');
-            btn.textContent = filterOn ? 'Вимк фільтрацію' : 'Увімк фільтрацію';
-        });
-
-        // Можна динамічно оновити показники:
-        document.getElementById('oxygenDisplay').textContent = 'Кисень: 6.8 мг/л';
-        document.getElementById('salinityDisplay').textContent = 'Солоність: 0.5 ‰';
-    </script>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 
