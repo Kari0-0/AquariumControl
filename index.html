@@ -51,6 +51,7 @@
             <div class="controls">
                 <button id="feedButton">Погодувати риб</button>
                 <button id="lightButton">Увімкнути/вимкнути освітлення</button>
+                <button id="filterButton">Увімк/вимкн фільтрацію</button>
             </div>
 
             <div class="log-section">
@@ -62,6 +63,39 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const logList = document.getElementById("logList");
+    const feedButton = document.getElementById("feedButton");
+    const lightButton = document.getElementById("lightButton");
+    const filterButton = document.getElementById("filterButton");
+    let filterOn = false;
+
+    function addLogEntry(message) {
+        const time = new Date().toLocaleTimeString();
+        const li = document.createElement("li");
+        li.textContent = `[${time}] ${message}`;
+        logList.prepend(li);
+    }
+
+    feedButton.addEventListener("click", () => {
+        addLogEntry("Риб погодувано");
+    });
+
+    lightButton.addEventListener("click", () => {
+        addLogEntry("Освітлення перемкнено");
+    });
+
+    filterButton.addEventListener("click", () => {
+        filterOn = !filterOn;
+        const status = filterOn ? "Увімкнено" : "Вимкнено";
+        addLogEntry(`Фільтрацію ${status}`);
+    });
+});
+
+
+</script>
+    
 </body>
 </html>
