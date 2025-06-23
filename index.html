@@ -7,11 +7,11 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <style>
-.active-button {
-    background-color: #4CAF50; /* зелений або будь-який бажаний */
-    color: white;
-}
-</style>
+        .active-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -24,7 +24,6 @@
             </div>
         </header>
 
-        <!-- 🔁 Повернуто меню -->
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html" class="active">Головна</a></li>
@@ -72,66 +71,56 @@
                 <ul id="logList">
                     <li>Лог завантажується...</li>
                 </ul>
-             
             </div>
         </main>
     </div>
 
-    <script src="script.js">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const feedButton = document.getElementById('feedButton');
+            const lightButton = document.getElementById('lightButton');
+            const filterButton = document.getElementById('filterButton');
+            const aerationButton = document.getElementById('aerationButton');
+            const logList = document.getElementById('logList');
 
-// script.js
+            let lightOn = false;
+            let filterOn = false;
+            let aerationOn = false;
 
-document.addEventListener('DOMContentLoaded', function () {
-    const feedButton = document.getElementById('feedButton');
-    const lightButton = document.getElementById('lightButton');
-    const filterButton = document.getElementById('filterButton');
-    const aerationButton = document.getElementById('aerationButton');
-    const logList = document.getElementById('logList');
+            function addLog(message) {
+                const li = document.createElement('li');
+                li.textContent = `${new Date().toLocaleString()} - ${message}`;
+                logList.prepend(li);
+            }
 
-    // Стан для кожної кнопки
-    let lightOn = false;
-    let filterOn = false;
-    let aerationOn = false;
+            function toggleButton(button, state) {
+                button.classList.toggle('active-button', state);
+            }
 
-    function addLog(message) {
-        const li = document.createElement('li');
-        li.textContent = `${new Date().toLocaleString()} - ${message}`;
-        logList.prepend(li);
-    }
+            feedButton.addEventListener('click', () => {
+                addLog('Годування риб активовано.');
+                feedButton.classList.add('active-button');
+                setTimeout(() => feedButton.classList.remove('active-button'), 500);
+            });
 
-    function toggleButton(button, isOn) {
-        if (isOn) {
-            button.classList.add('active-button');
-        } else {
-            button.classList.remove('active-button');
-        }
-    }
+            lightButton.addEventListener('click', () => {
+                lightOn = !lightOn;
+                toggleButton(lightButton, lightOn);
+                addLog(lightOn ? 'Увімкнення освітлення.' : 'Вимкнення освітлення.');
+            });
 
-    feedButton.addEventListener('click', () => {
-        addLog('Годування риб активовано.');
-        feedButton.classList.add('active-button');
-        setTimeout(() => feedButton.classList.remove('active-button'), 500); // на мить зміна кольору
-    });
+            filterButton.addEventListener('click', () => {
+                filterOn = !filterOn;
+                toggleButton(filterButton, filterOn);
+                addLog(filterOn ? 'Увімкнення фільтрації.' : 'Вимкнення фільтрації.');
+            });
 
-    lightButton.addEventListener('click', () => {
-        lightOn = !lightOn;
-        toggleButton(lightButton, lightOn);
-        addLog(lightOn ? 'Освітлення увімкнено.' : 'Освітлення вимкнено.');
-    });
-
-    filterButton.addEventListener('click', () => {
-        filterOn = !filterOn;
-        toggleButton(filterButton, filterOn);
-        addLog(filterOn ? 'Фільтрацію увімкнено.' : 'Фільтрацію вимкнено.');
-    });
-
-    aerationButton.addEventListener('click', () => {
-        aerationOn = !aerationOn;
-        toggleButton(aerationButton, aerationOn);
-        addLog(aerationOn ? 'Аерацію увімкнено.' : 'Аерацію вимкнено.');
-    });
-});
-
-</script>
+            aerationButton.addEventListener('click', () => {
+                aerationOn = !aerationOn;
+                toggleButton(aerationButton, aerationOn);
+                addLog(aerationOn ? 'Увімкнення аерації.' : 'Вимкнення аерації.');
+            });
+        });
+    </script>
 </body>
-</html> 
+</html>
