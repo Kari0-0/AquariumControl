@@ -209,6 +209,7 @@
 <body>
   <aside>
     <h2>Акваріум</h2>
+    <br>
     <nav>
       <a href="#" class="nav-btn" data-page="homePage">Головна</a>
       <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
@@ -278,47 +279,41 @@
   <div class="card">
     <h2>Показники акваріума</h2>
 
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
-      <div style="flex: 1; min-width: 220px; background: #e9f7fc; padding: 12px; border-radius: 10px;">
-        <strong>Обʼєм:</strong> 120 л<br>
-        <strong>Тип:</strong> Прісноводний<br>
-        <strong>Код пристрою:</strong> AQRX-374
+    <p>Акваріум — це складна екосистема, яка потребує постійного моніторингу. Нижче представлені графіки в реальному часі та блоки з ключовими значеннями для аналізу стану водного середовища. Ви можете сортувати дані за параметрами.</p>
+
+    <div class="chart-block">
+      <canvas id="aquariumStatsChart" style="width:100%; max-height: 300px;"></canvas>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+      <div style="flex: 1; min-width: 220px; background: #eef9f4; padding: 12px; border-radius: 10px;">
+        <strong>🌡️ Температура:</strong> 24.6°C<br>
+        <span>Оптимум для тропічних риб. Стабільна.</span>
       </div>
-      <div style="flex: 1; min-width: 220px; background: #e9f7fc; padding: 12px; border-radius: 10px;">
-        <strong>Освітлення:</strong> LED, 12 год/день<br>
-        <strong>Локація:</strong> Вітальня
+      <div style="flex: 1; min-width: 220px; background: #f0f0fd; padding: 12px; border-radius: 10px;">
+        <strong>💧 pH:</strong> 7.2<br>
+        <span>Нейтральний рівень. Без коливань.</span>
       </div>
-      <div style="flex: 1; min-width: 220px; background: #e9f7fc; padding: 12px; border-radius: 10px;">
-        <strong>Автогодівля:</strong> Увімкнено<br>
-        <strong>Сповіщення:</strong> Активні
+      <div style="flex: 1; min-width: 220px; background: #fff3e6; padding: 12px; border-radius: 10px;">
+        <strong>🌀 Фільтрація:</strong> Активна<br>
+        <span>Циркуляція води стабільна.</span>
+      </div>
+      <div style="flex: 1; min-width: 220px; background: #fef7f9; padding: 12px; border-radius: 10px;">
+        <strong>🌿 Вологість ґрунту:</strong> 526.9<br>
+        <span>У межах норми для водних рослин.</span>
       </div>
     </div>
 
     <div style="margin-top: 20px;">
-      <h3>🌿 Вологість ґрунту</h3>
-      <p>Стан ґрунту впливає на кореневу систему та біофільтрацію. Перевищення 700+ — сигнал для перевірки фільтрації.</p>
-
-    </div>
-
-    <div style="margin-top: 30px;">
-      <h3>🌡️ Температура</h3>
-      <p>Температура змінюється протягом доби. Оптимум: 24–26°C для тропічних видів. Перевищення 28°C — стресовий рівень.</p>
-     
-    </div>
-
-    <div style="margin-top: 30px;">
-      <h3>💧 рН</h3>
-      <p>Відображає кислотність води. Нейтральний діапазон: 6.5–7.5. Раптові зміни можуть впливати на риб та рослини.</p>
-   
-    </div>
-
-    <div style="margin-top: 30px;">
-      <h3>🌀 Фільтрація</h3>
-      <p>Фільтрація забезпечує чистоту і кисень. Періодично перевіряйте насос і губки на забруднення.</p>
-
+      <label for="sortSelect"><strong>Сортувати за:</strong></label>
+      <select id="sortSelect" onchange="sortMetrics()" style="margin-left: 10px; padding: 5px; border-radius: 5px;">
+        <option value="temp">Температура</option>
+        <option value="ph">pH</option>
+        <option value="filter">Фільтрація</option>
+        <option value="moisture">Вологість ґрунту</option>
+      </select>
     </div>
   </div>
-</div>
 
     <!-- Analytics -->
     <div class="dashboard hidden" id="analyticsPage">
@@ -544,6 +539,46 @@ function addAquariumWithAutoCode() {
       const name = prompt("Нова назва акваріума:", h2.textContent);
       if (name) h2.textContent = name;
     }
+    const ctx = document.getElementById('aquariumStatsChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['6:00','9:00','12:00','15:00','18:00'],
+      datasets: [
+        {
+          label: 'Температура (°C)',
+          data: [24.3, 24.6, 25.0, 24.8, 24.6],
+          borderColor: '#2a95b8',
+          fill: false
+        },
+        {
+          label: 'pH',
+          data: [7.0, 7.1, 7.2, 7.2, 7.1],
+          borderColor: '#8e44ad',
+          fill: false
+        },
+        {
+          label: 'Вологість ґрунту',
+          data: [520, 525, 528, 530, 526],
+          borderColor: '#27ae60',
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' },
+        title: { display: true, text: 'Динаміка показників за добу' }
+      }
+    }
+  });
+
+  function sortMetrics() {
+    const value = document.getElementById('sortSelect').value;
+    alert(`Сортування за: ${value}`);
+    // Тут можна реалізувати сортування даних при наявності таблиці або запиту до API
+  }
   </script>
 </body>
 </html>
