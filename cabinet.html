@@ -1,25 +1,58 @@
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Особистий кабінет — Розумний Акваріум</title>
+  <title>Розумний Акваріум</title>
+  <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" href="https://cdn-icons-png.freepik.com/512/18284/18284610.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    /* ... усі стилі з твого CSS — залишаю без змін, обрізано тут для економії ... */
-    body { font-family: 'Montserrat', sans-serif; background: #f4f9fb; color: #333; }
-    .hidden { display: none; }
-    .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    nav a { color: white; text-decoration: none; display: block; margin: 10px 0; }
-    aside { background: #2a95b8; color: white; width: 220px; padding: 20px; }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    button { background-color: #2a95b8; color: white; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
-    button:hover { background-color: #217a99; }
-  </style>
+<style>
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  margin: 0;
+}
+aside {
+  width: 200px;
+  background: #2a95b8;
+  color: white;
+  padding: 20px;
+}
+nav a {
+  display: block;
+  color: white;
+  margin: 10px 0;
+  text-decoration: none;
+}
+main {
+  flex-grow: 1;
+  padding: 20px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+}
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.card {
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+.hidden {
+  display: none;
+}
+
+
+</style>
 </head>
 <body>
   <aside>
@@ -29,141 +62,81 @@
       <a href="#" class="nav-btn" data-page="myAquariums">Мої акваріуми</a>
       <a href="#" class="nav-btn" data-page="statsPage">Статистика</a>
       <a href="#" class="nav-btn" data-page="settingsPage">Налаштування</a>
-      <a href="auth.html">Вийти</a>
     </nav>
   </aside>
   <main>
     <header>
-      <div>
-        <h1 id="welcome">Вітаємо, Користувачу!</h1>
-        <p id="overview">Огляд вашої системи розумного акваріума</p>
-      </div>
+      <h1 id="welcome">Вітаємо, Користувачу!</h1>
       <div class="controls">
         <button onclick="toggleLang()">UA / EN</button>
         <button onclick="toggleTheme()">☀️ / 🌙</button>
       </div>
     </header>
 
-    <!-- Home -->
     <div class="dashboard" id="homePage">
       <div class="card"><h2>Температура</h2><canvas id="tempChart"></canvas></div>
       <div class="card"><h2>Тиск</h2><canvas id="pressureChart"></canvas></div>
-      <div class="card"><h2>Світло</h2><p>12 годин / добу</p></div>
-      <div class="card"><h2>Корм</h2><p>Автогодівля: 3 рази/день</p></div>
-      <div class="card"><h2>Кисень</h2><p>6.8 мг/л</p></div>
-      <div class="card"><h2>pH</h2><p>Стабільний — 7.2</p></div>
     </div>
-    <!-- My Aquariums -->
+
     <div class="dashboard hidden" id="myAquariums">
-      <div class="card">
-        <h2>Акваріум №1</h2>
-        <p>Тип: Прісноводний</p>
-        <p>Обʼєм: 100 л</p>
-        <button onclick="alert('Редагування...')">Редагувати</button>
-      </div>
+      <div class="card"><h2>Акваріум №1</h2><p>Тип: Прісноводний</p><p>Обʼєм: 100 л</p></div>
     </div>
 
-    <!-- Statistics -->
     <div class="dashboard hidden" id="statsPage">
-      <div class="card">
-        <h2>Статистика Показників</h2>
-        <canvas id="aquariumStatsChart"></canvas>
-      </div>
+      <div class="card"><h2>Статистика</h2><canvas id="statsChart"></canvas></div>
     </div>
 
-    <!-- Settings -->
     <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Налаштування</h2>
-        <label><input type="checkbox" onchange="toggleTheme()"> Темна тема</label><br><br>
-        <label><input type="checkbox" checked> Автогодівля</label>
-      </div>
+      <div class="card"><h2>Налаштування</h2><label><input type="checkbox" onchange="toggleTheme()"> Темна тема</label></div>
     </div>
-
-    <footer><p>AquariumControl © 2025</p></footer>
   </main>
 
-  <script>
-    // Перемикання мови
-    let lang = 'ua';
-    function toggleLang() {
-      lang = lang === 'ua' ? 'en' : 'ua';
-      document.getElementById('welcome').textContent = lang === 'ua' ? 'Вітаємо, Користувачу!' : 'Welcome, User!';
-      document.getElementById('overview').textContent = lang === 'ua'
-        ? 'Огляд вашої системи розумного акваріума'
-        : 'Smart aquarium system overview';
-    }
+  <script src="script.js">
 
-    // Темна тема
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-    }
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+}
+function toggleLang() {
+  const welcome = document.getElementById("welcome");
+  welcome.textContent = welcome.textContent.includes("Вітаємо") ? "Welcome, User!" : "Вітаємо, Користувачу!";
+}
 
-    // Перемикання сторінок
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const page = btn.getAttribute('data-page');
-        document.querySelectorAll('.dashboard').forEach(d => d.classList.add('hidden'));
-        document.getElementById(page).classList.remove('hidden');
-      });
-    });
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const page = btn.getAttribute('data-page');
+    document.querySelectorAll('.dashboard').forEach(d => d.classList.add('hidden'));
+    document.getElementById(page).classList.remove('hidden');
+  });
+});
 
-    // Chart.js графіки
-    new Chart(document.getElementById('tempChart'), {
-      type: 'line',
-      data: {
-        labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
-        datasets: [{
-          label: 'Температура (°C)',
-          data: [24.1, 24.6, 25.0, 24.7, 24.3],
-          borderColor: '#2a95b8',
-          backgroundColor: 'rgba(42, 149, 184, 0.2)',
-          fill: true,
-          tension: 0.4
-        }]
-      }
-    });
+new Chart(document.getElementById('tempChart'), {
+  type: 'line',
+  data: {
+    labels: ['6:00', '9:00', '12:00', '15:00', '18:00'],
+    datasets: [{
+      label: 'Температура (°C)',
+      data: [24.1, 24.6, 25.0, 24.7, 24.3],
+      borderColor: '#2a95b8',
+      fill: false
+    }]
+  }
+});
 
-    new Chart(document.getElementById('pressureChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт'],
-        datasets: [{
-          label: 'Тиск (мм рт.ст.)',
-          data: [760, 762, 758, 759, 761],
-          backgroundColor: '#2a95b8'
-        }]
-      }
-    });
+new Chart(document.getElementById('pressureChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт'],
+    datasets: [{
+      label: 'Тиск (мм рт.ст.)',
+      data: [760, 762, 758, 759, 761],
+      backgroundColor: '#2a95b8'
+    }]
+  }
+});
 
-    new Chart(document.getElementById('aquariumStatsChart'), {
-      type: 'line',
-      data: {
-        labels: ['6:00','9:00','12:00','15:00','18:00'],
-        datasets: [
-          {
-            label: 'Температура (°C)',
-            data: [24.3, 24.6, 25.0, 24.8, 24.6],
-            borderColor: '#2a95b8',
-            fill: false
-          },
-          {
-            label: 'pH',
-            data: [7.0, 7.1, 7.2, 7.2, 7.1],
-            borderColor: '#8e44ad',
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: 'top' },
-          title: { display: true, text: 'Динаміка показників за добу' }
-        }
-      }
-    });
-  </script>
+
+
+</script>
 </body>
 </html>
