@@ -202,7 +202,7 @@
         <p>Корм — живлення</p>
         <p>Кисень — життєдіяльність</p>
         <button onclick="downloadPNG()">⬇️ Завантажити PNG</button>
-        <button onclick="downloadPDF()">⬇️ Завантажити PDF</button>
+
         <button onclick="downloadCSV()">⬇️ Завантажити CSV</button>
         <button onclick="downloadJSON()">⬇️ Завантажити JSON</button>
       </div>
@@ -212,7 +212,7 @@
     <div class="dashboard hidden" id="analyticsPage">
       <div class="card">
         <h2>Google Аналітика</h2>
-        <img id="googleBanner" src="https://blog.google/static/blogv2/images/google-1000x600.jpg" alt="Google Analytics"/>
+       
         <canvas id="analyticsPie" width="300" height="300"></canvas>
       </div>
     </div>
@@ -221,8 +221,6 @@
     <div class="dashboard hidden" id="settingsPage">
       <div class="card">
         <h2>Профіль</h2>
-        <div class="toggle-group"><label>Змінити імʼя</label><input type="text" placeholder="Ваше імʼя"></div>
-        <div class="toggle-group"><label>Email</label><input type="email" placeholder="example@gmail.com"></div>
         <div class="toggle-group"><label>Увімкнути автогодівлю</label><input type="checkbox" checked></div>
         <div class="toggle-group"><label>Сповіщення</label><input type="checkbox"></div>
         <div class="toggle-group"><label>Темна тема</label><input type="checkbox" onchange="toggleTheme()"></div>
@@ -263,7 +261,7 @@
     new Chart(document.getElementById('analyticsPie'), {
       type: 'pie',
       data: {
-        labels: ['Корм', 'Температура', 'Світло', 'Кисень', 'pH'],
+        labels: ['Київ', 'Дніпро', 'Харків', 'Житомир', 'Львів'],
         datasets: [{
           data: [20, 25, 15, 30, 10],
           backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0', '#9966ff']
