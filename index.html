@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Розумний Акваріум - Головна</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -20,6 +17,22 @@
                 <p class="description">Цей інтерфейс дозволяє переглядати та керувати основними показниками акваріума.</p>
             </div>
         </header>
+
+        <!-- 🔁 Повернуто меню -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Головна</a></li>
+                <li><a href="about.html">Про Систему</a></li>
+                <li><a href="faq.html">Часті питання</a></li>
+                <li><a href="contacts.html">Контакти</a></li>
+                <li><a href="specs.html">Характеристики</a></li>
+                <li><a href="how-it-works.html">Принципи Роботи</a></li>
+                <li><a href="history.html">Історія Змін</a></li>
+                <li><a href="gallery.html">Галерея</a></li>
+                <li><a href="settings.html">Налаштування</a></li>
+                <li><a href="privacy.html">Політика</a></li>
+            </ul>
+        </nav>
 
         <main>
             <div class="dashboard">
@@ -58,60 +71,6 @@
         </main>
     </div>
 
-    <script src="script.js">
-document.addEventListener("DOMContentLoaded", () => {
-    const logList = document.getElementById("logList");
-    const temperature = document.getElementById("temperature");
-    const ph = document.getElementById("ph");
-    const oxygen = document.getElementById("oxygen");
-    const salinity = document.getElementById("salinity");
-
-    const feedButton = document.getElementById("feedButton");
-    const lightButton = document.getElementById("lightButton");
-    const filterButton = document.getElementById("filterButton");
-    const aerationButton = document.getElementById("aerationButton");
-    const downloadLogButton = document.getElementById("downloadLogButton");
-
-    let logData = [];
-
-    function addLogEntry(message) {
-        const time = new Date().toLocaleTimeString();
-        const logMessage = `[${time}] ${message}`;
-        const li = document.createElement("li");
-        li.textContent = logMessage;
-        logList.prepend(li);
-        logData.push(logMessage);
-    }
-
-    function simulateSensorData() {
-        temperature.textContent = (20 + Math.random() * 6).toFixed(1) + " °C";
-        ph.textContent = (6 + Math.random() * 2).toFixed(2);
-        oxygen.textContent = (4 + Math.random() * 3).toFixed(2) + " мг/л";
-        salinity.textContent = (30 + Math.random() * 5).toFixed(1) + " ‰";
-    }
-
-    setInterval(simulateSensorData, 5000);
-    simulateSensorData();
-    logList.innerHTML = "";
-
-    feedButton.addEventListener("click", () => addLogEntry("Риб погодувано"));
-    lightButton.addEventListener("click", () => addLogEntry("Освітлення перемкнено"));
-    filterButton.addEventListener("click", () => addLogEntry("Фільтрація перемкнена"));
-    aerationButton.addEventListener("click", () => addLogEntry("Аерація перемкнена"));
-
-    downloadLogButton.addEventListener("click", () => {
-        const blob = new Blob([logData.join('\n')], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "log_aquarium.txt";
-        a.click();
-        URL.revokeObjectURL(url);
-    });
-});
-
-
-
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
