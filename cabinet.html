@@ -262,13 +262,39 @@
     </div>
 
     <!-- Налаштування -->
-    <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Профіль</h2>
-        <div class="toggle-group"><label>ML Status</label><input type="checkbox" id="mlStatus" onchange="toggleML()"></div>
-        <div class="toggle-group"><label>Темна тема</label><input type="checkbox" onchange="toggleTheme()"></div>
-      </div>
+   <!-- Налаштування -->
+<div class="dashboard hidden" id="settingsPage">
+  <div class="card">
+    <h2>Налаштування</h2>
+
+    <p><strong>Інтерфейс:</strong> Українська</p>
+    <p><strong>Користувач:</strong> Користувач</p>
+
+    <div class="toggle-group">
+      <label>Сповіщення:</label>
+      <input type="checkbox" id="notifToggle" checked />
     </div>
+    <div class="toggle-group">
+      <label>Автогодівля:</label>
+      <input type="checkbox" id="autoFeedToggle" />
+    </div>
+    <div class="toggle-group">
+      <label>Економія:</label>
+      <input type="checkbox" id="ecoToggle" checked />
+    </div>
+
+    <div class="toggle-group">
+      <label>ML Status:</label>
+      <input type="checkbox" id="mlStatus" onchange="toggleML()" />
+    </div>
+
+    <div class="toggle-group">
+      <label>Темна тема:</label>
+      <input type="checkbox" onchange="toggleTheme()" />
+    </div>
+  </div>
+</div>
+
 
     <br><br>
     <footer><p>AquariumControl, 2025 ©</p></footer>
