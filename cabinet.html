@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="https://cdn-icons-png.freepik.com/512/18284/18284610.png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
       --bg-light: #f4f9fb;
@@ -76,6 +77,17 @@
     body.dark .card { background: var(--card-bg-dark); }
     .card h2 { margin-bottom: 10px; color: #217a99; font-size: 18px; }
     .hidden { display: none; }
+    .aquarium-card img { width: 100%; border-radius: 8px; gap: 10px; }
+    .aquarium-actions { display: flex; gap: 10px; margin-top: 10px; }
+    .aquarium-actions button {
+      flex: 1;
+      padding: 6px;
+      background: #3b8dbc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
     .toggle-group {
       display: flex;
       justify-content: space-between;
@@ -85,6 +97,9 @@
     .toggle-group input[type="checkbox"] {
       transform: scale(1.3);
       accent-color: #2a95b8;
+    }
+    #mlWarnings ul li {
+      margin-bottom: 6px;
     }
   </style>
 </head>
@@ -112,38 +127,6 @@
       </div>
     </header>
 
-    <div class="dashboard" id="homePage">
-      <div class="card">
-        <h2>Кількість акваріумів</h2>
-        <p id="aquariumCount">3</p>
-      </div>
-      <div class="card">
-        <h2>Середні показники</h2>
-        <p id="avgData">Температура: 24.3°C<br>pH: 7.2</p>
-      </div>
-      <div class="card">
-        <h2>Журнал подій</h2>
-        <ul id="logEvents">
-          <li>10:00 — Увімкнено освітлення</li>
-          <li>10:30 — Погодовано риб</li>
-          <li>11:00 — Температура знижена до 24°C</li>
-          <li>12:00 — Збережено зміни pH</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>Статистика температури</h2>
-        <canvas id="homeTempChart"></canvas>
-      </div>
-    </div>
-
-    <div class="dashboard hidden" id="myAquariums">
-      <div class="card"><h2>Мої акваріуми</h2><p>Список усіх ваших акваріумів буде тут</p></div>
-    </div>
-
-    <div class="dashboard hidden" id="statsPage">
-      <div class="card"><h2>Статистика</h2><p>Загальні дані про акваріум</p></div>
-    </div>
-
     <div class="dashboard hidden" id="analyticsPage">
       <div class="card">
         <h2>Динаміка температури</h2>
@@ -159,19 +142,8 @@
       </div>
     </div>
 
-    <div class="dashboard hidden" id="settingsPage">
-      <div class="card">
-        <h2>Налаштування</h2>
-        <div class="toggle-group">
-          <label for="mlToggle">ML Status</label>
-          <input type="checkbox" id="mlToggle" />
-        </div>
-      </div>
-    </div>
-
     <footer><p>AquariumControl, 2025 ©</p></footer>
   </main>
-
   <script>
     function toggleTheme() { document.body.classList.toggle('dark'); }
     function toggleLang() {
@@ -185,35 +157,6 @@
       document.querySelectorAll('.dashboard').forEach(s=>s.classList.add('hidden'));
       document.getElementById(btn.dataset.page).classList.remove('hidden');
     }));
-
-    const tempChart = new Chart(document.getElementById('homeTempChart'), {
-      type: 'line',
-      data: {
-        labels: ['8:00', '10:00', '12:00', '14:00', '16:00'],
-        datasets: [{
-          label: 'Температура (°C)',
-          data: [23.4, 23.8, 24.5, 24.9, 25.1],
-          borderColor: '#2a95b8',
-          backgroundColor: 'rgba(42, 149, 184, 0.2)',
-          fill: true,
-          tension: 0.4
-        }]
-      }
-    });
-
-    function updateTemp() {
-      const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-      const nextTemp = +(23 + Math.random() * 3).toFixed(1);
-      tempChart.data.labels.push(now);
-      tempChart.data.datasets[0].data.push(nextTemp);
-      if (tempChart.data.labels.length > 6) {
-        tempChart.data.labels.shift();
-        tempChart.data.datasets[0].data.shift();
-      }
-      tempChart.update();
-    }
-
-    setInterval(updateTemp, 10000);
 
     new Chart(document.getElementById('analyticsTempChart'), {
       type: 'line',
