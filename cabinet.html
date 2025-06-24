@@ -137,11 +137,11 @@
     </div>
 
     <div class="dashboard hidden" id="myAquariums">
-      <div class="card"><h2>Мої акваріуми</h2><p>Тут зʼявиться список усіх ваших акваріумів</p></div>
+      <div class="card"><h2>Мої акваріуми</h2><p>Список усіх ваших акваріумів буде тут</p></div>
     </div>
 
     <div class="dashboard hidden" id="statsPage">
-      <div class="card"><h2>Статистика</h2><p>Огляд загальних даних</p></div>
+      <div class="card"><h2>Статистика</h2><p>Загальні дані про акваріум</p></div>
     </div>
 
     <div class="dashboard hidden" id="analyticsPage">
@@ -160,7 +160,13 @@
     </div>
 
     <div class="dashboard hidden" id="settingsPage">
-      <div class="card"><h2>Налаштування</h2><p>Параметри вашого акаунту</p></div>
+      <div class="card">
+        <h2>Налаштування</h2>
+        <div class="toggle-group">
+          <label for="mlToggle">ML Status</label>
+          <input type="checkbox" id="mlToggle" />
+        </div>
+      </div>
     </div>
 
     <footer><p>AquariumControl, 2025 ©</p></footer>
