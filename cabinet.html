@@ -115,15 +115,15 @@
     <div class="dashboard" id="homePage">
       <div class="card">
         <h2>Кількість акваріумів</h2>
-        <p>3</p>
+        <p id="aquariumCount">3</p>
       </div>
       <div class="card">
         <h2>Середні показники</h2>
-        <p>Температура: 24.3°C<br>pH: 7.2</p>
+        <p id="avgData">Температура: 24.3°C<br>pH: 7.2</p>
       </div>
       <div class="card">
         <h2>Журнал подій</h2>
-        <ul>
+        <ul id="logEvents">
           <li>10:00 — Увімкнено освітлення</li>
           <li>10:30 — Погодовано риб</li>
           <li>11:00 — Температура знижена до 24°C</li>
@@ -168,7 +168,7 @@
       document.getElementById(btn.dataset.page).classList.remove('hidden');
     }));
 
-    new Chart(document.getElementById('homeTempChart'), {
+    const tempChart = new Chart(document.getElementById('homeTempChart'), {
       type: 'line',
       data: {
         labels: ['8:00', '10:00', '12:00', '14:00', '16:00'],
@@ -183,6 +183,20 @@
       }
     });
 
+    function updateTemp() {
+      const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const nextTemp = +(23 + Math.random() * 3).toFixed(1);
+      tempChart.data.labels.push(now);
+      tempChart.data.datasets[0].data.push(nextTemp);
+      if (tempChart.data.labels.length > 6) {
+        tempChart.data.labels.shift();
+        tempChart.data.datasets[0].data.shift();
+      }
+      tempChart.update();
+    }
+
+    setInterval(updateTemp, 10000);
+
     new Chart(document.getElementById('analyticsTempChart'), {
       type: 'line',
       data: {
@@ -191,10 +205,12 @@
           label: 'Температура (°C)',
           data: [23.5, 24, 24.7, 25.2, 24.8],
           borderColor: '#f39c12',
+          fill: false,
           tension: 0.3
         }]
       }
     });
+
     new Chart(document.getElementById('analyticsPhChart'), {
       type: 'line',
       data: {
@@ -203,10 +219,12 @@
           label: 'pH',
           data: [7.2, 7.3, 7.1, 7.0, 7.2],
           borderColor: '#8e44ad',
+          fill: false,
           tension: 0.3
         }]
       }
     });
+
     new Chart(document.getElementById('analyticsFilterChart'), {
       type: 'line',
       data: {
@@ -215,6 +233,7 @@
           label: 'Фільтрація (%)',
           data: [80, 85, 90, 88, 92],
           borderColor: '#16a085',
+          fill: false,
           tension: 0.3
         }]
       }
