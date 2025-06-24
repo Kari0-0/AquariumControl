@@ -18,6 +18,12 @@
       --card-bg-dark: #2c2c2c;
       --accent: #2a95b8;
     }
+    .card p:last-of-type {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
      .card {
       background: var(--card-bg-light);
       border-radius: 12px;
@@ -378,6 +384,17 @@
     function deleteAquarium(btn) {
       if (confirm('Видалити акваріум?')) btn.closest('.card').remove();
     }
+setInterval(() => {
+  const chart = Chart.getChart("tempChart");
+  const newTemp = (24 + Math.random() * 2).toFixed(1);
+  chart.data.datasets[0].data.push(Number(newTemp));
+  chart.data.labels.push(new Date().getHours() + ':' + new Date().getMinutes());
+  if(chart.data.datasets[0].data.length > 6){
+    chart.data.datasets[0].data.shift();
+    chart.data.labels.shift();
+  }
+  chart.update();
+}, 5000); // кожні 5 секунд
 
     function editAquarium(btn) {
       const card = btn.closest('.card');
